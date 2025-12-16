@@ -42,7 +42,7 @@ const home: Home = {
   path: "/",
   image: "/images/og/home.png",
   label: "Home",
-  title: `${person.name} 포트폴리오`,
+  title: `${person.name}`,
   description: `Portfolio website showcasing my work`,
   headline: <>Creative Design & Development</>,
   featured: {

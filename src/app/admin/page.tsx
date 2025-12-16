@@ -51,7 +51,7 @@ title: "${title}"
 publishedAt: "${getCurrentDate()}"
 summary: "${summary || '포스트 요약을 입력하세요.'}"`;
 
-    if (imageList.length > 0 && postType === 'work') {
+    if (imageList.length > 0) {
       mdxContent += `\nimages:`;
       imageList.forEach(img => {
         mdxContent += `\n  - "${img}"`;
@@ -91,11 +91,21 @@ ${content || '## 소개\n\n여기에 내용을 작성하세요.'}
     const filePath = `src/app/${postType}/${folder}/${finalSlug}.mdx`;
     const mdxContent = generateMDX();
 
-    // GitHub 새 파일 생성 URL
-    const githubUrl = `https://github.com/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/new/${GITHUB_CONFIG.branch}?filename=${encodeURIComponent(filePath)}&value=${encodeURIComponent(mdxContent)}`;
+    // 커밋 메시지 자동 생성
+    const commitMessage = `Add ${postType} post: ${title}`;
+
+    // GitHub 새 파일 생성 URL (커밋 메시지 포함)
+    const githubUrl = `https://github.com/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/new/${GITHUB_CONFIG.branch}?filename=${encodeURIComponent(filePath)}&value=${encodeURIComponent(mdxContent)}&message=${encodeURIComponent(commitMessage)}`;
 
     // GitHub로 이동
     window.open(githubUrl, '_blank');
+  };
+
+  const handleImageUpload = () => {
+    // 이미지 업로드 페이지로 이동
+    const imageFolder = postType === 'work' ? 'projects/project-01' : 'blog';
+    const uploadUrl = `https://github.com/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/upload/${GITHUB_CONFIG.branch}/public/images/${imageFolder}`;
+    window.open(uploadUrl, '_blank');
   };
 
   const inputStyle = {
@@ -190,19 +200,49 @@ ${content || '## 소개\n\n여기에 내용을 작성하세요.'}
               />
             </div>
 
-            {/* 이미지 (work만) */}
-            {postType === 'work' && (
-              <div>
-                <label style={labelStyle}>이미지 경로 (쉼표로 구분)</label>
-                <input
-                  type="text"
-                  value={images}
-                  onChange={(e) => setImages(e.target.value)}
-                  placeholder="/images/project1.png, /images/project2.png"
-                  style={inputStyle}
-                />
+            {/* 이미지 */}
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                <label style={{ ...labelStyle, marginBottom: 0 }}>이미지 경로 (쉼표로 구분, 선택)</label>
+                <button
+                  type="button"
+                  onClick={handleImageUpload}
+                  style={{
+                    padding: '4px 12px',
+                    borderRadius: '6px',
+                    border: '1px solid var(--neutral-border-weak)',
+                    backgroundColor: 'var(--neutral-background-medium)',
+                    color: 'var(--brand-on-background-strong)',
+                    fontSize: '12px',
+                    fontWeight: 500,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s'
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.backgroundColor = 'var(--brand-background-weak)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.backgroundColor = 'var(--neutral-background-medium)';
+                  }}
+                >
+                  📤 이미지 업로드
+                </button>
               </div>
-            )}
+              <input
+                type="text"
+                value={images}
+                onChange={(e) => setImages(e.target.value)}
+                placeholder="/images/{postType}/image1.png, /images/{postType}/image2.png"
+                style={inputStyle}
+              />
+              <p style={{
+                fontSize: '12px',
+                color: 'var(--neutral-on-background-weak)',
+                margin: '4px 0 0 0'
+              }}>
+                💡 버튼을 클릭하면 GitHub 이미지 업로드 페이지가 열립니다. 이미지를 업로드한 후 경로를 복사하여 입력하세요.
+              </p>
+            </div>
 
             {/* 링크 */}
             <div>
