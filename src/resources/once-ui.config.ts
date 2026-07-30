@@ -14,7 +14,7 @@ import {
 import { home } from "./index";
 
 // IMPORTANT: Replace with your own domain address - it's used for SEO in meta tags and schema
-const baseURL: string = "https://louis1618.shop";
+const baseURL: string = "https://moring.co";
 
 const routes: RoutesConfig = {
   "/": true,
@@ -192,7 +192,7 @@ const schema: SchemaConfig = {
   type: "Organization",
   name: "Luverse",
   description: home.description,
-  email: "me@louis1618.shop",
+  email: "me@moring.co",
 };
 
 // social links
