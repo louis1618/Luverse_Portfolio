@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { routes, protectedRoutes } from "@/resources";
 import { Flex, Spinner, Heading, Column } from "@once-ui-system/core";
 import NotFound from "@/app/not-found";
-import { createClient } from "@/utils/supabase/client";
+import { getProfile, signOut } from "@/app/actions/auth";
 import Image from "next/image";
 
 interface RouteGuardProps {
@@ -46,22 +46,17 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
       setIsRouteEnabled(routeEnabled);
 
       if (protectedRoutes[pathname as keyof typeof protectedRoutes]) {
-        const supabase = createClient();
-        const { data: { session } } = await supabase.auth.getSession();
+        const { session, profile } = await getProfile();
 
         if (session) {
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('permission_level')
-            .eq('id', session.user.id)
-            .single();
-
           if (profile && profile.permission_level >= 30) {
             setIsAuthenticated(true);
           } else {
             setAuthError("권한이 부족합니다. (Permission Level 30 이상 필요)");
-            await supabase.auth.signOut();
+            await signOut();
           }
+        } else {
+          setAuthError("세션을 찾을 수 없습니다. 로그인을 진행해 주세요.");
         }
       }
 
