@@ -97,11 +97,20 @@ export function useAdminDrafts(
     localStorage.removeItem(AUTOSAVE_KEY);
   }, []);
 
+  const deleteDraft = useCallback((draftId: string) => {
+    setDrafts((prev) => {
+      const updated = prev.filter(d => d.id !== draftId);
+      localStorage.setItem(MANUAL_DRAFTS_KEY, JSON.stringify(updated));
+      return updated;
+    });
+  }, []);
+
   return {
     lastSaved,
     drafts,
     saveManualDraft,
     restoreDraft,
-    clearAutoSave
+    clearAutoSave,
+    deleteDraft
   };
 }

@@ -9,9 +9,10 @@ interface DraftListModalProps {
   drafts: ManualDraft[];
   onClose: () => void;
   onSelectDraft: (draft: ManualDraft) => void;
+  onDeleteDraft: (draftId: string) => void;
 }
 
-export function DraftListModal({ drafts, onClose, onSelectDraft }: DraftListModalProps) {
+export function DraftListModal({ drafts, onClose, onSelectDraft, onDeleteDraft }: DraftListModalProps) {
   return (
     <div
       style={{
@@ -67,7 +68,17 @@ export function DraftListModal({ drafts, onClose, onSelectDraft }: DraftListModa
                     {new Date(draft.timestamp).toLocaleString()}
                   </Text>
                 </Column>
-                <Text variant="body-default-s" onBackground="brand-strong">비교하기</Text>
+                <Row gap="12" vertical="center">
+                  <Text variant="body-default-s" onBackground="danger-medium" 
+                    style={{ cursor: 'pointer', padding: '4px 8px' }} 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if(confirm('이 임시 저장본을 삭제하시겠습니까?')) onDeleteDraft(draft.id);
+                    }}>
+                    삭제
+                  </Text>
+                  <Text variant="body-default-s" onBackground="brand-strong">비교하기</Text>
+                </Row>
               </Row>
             ))}
           </Column>

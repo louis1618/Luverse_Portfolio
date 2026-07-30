@@ -42,7 +42,7 @@ export default function AdminPage() {
     setContent(draft.content || '');
   };
 
-  const { lastSaved, drafts, saveManualDraft, restoreDraft, clearAutoSave } = useAdminDrafts(currentState, handleRestore);
+  const { lastSaved, drafts, saveManualDraft, restoreDraft, clearAutoSave, deleteDraft } = useAdminDrafts(currentState, handleRestore);
 
   const onSaveManualDraft = () => {
     saveManualDraft();
@@ -598,6 +598,7 @@ export default function AdminPage() {
           drafts={drafts} 
           onClose={() => setIsDraftListOpen(false)}
           onSelectDraft={(draft) => setSelectedDraft(draft)}
+          onDeleteDraft={deleteDraft}
         />
       )}
       {selectedDraft && (
