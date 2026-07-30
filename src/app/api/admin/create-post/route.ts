@@ -1,4 +1,5 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/utils/supabase/server';
 
 function getCurrentDate() {
   const now = new Date();
@@ -8,122 +9,158 @@ function getCurrentDate() {
   return `${year}-${month}-${day}`;
 }
 
-async function createFileInGitHub(
-  owner: string,
-  repo: string,
-  path: string,
-  content: string,
-  token: string
-) {
-  // 파일이 존재하는지 확인
-  const checkUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-  const checkResponse = await fetch(checkUrl, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/vnd.github.v3+json',
-    },
-  });
-
-  if (checkResponse.ok) {
-    throw new Error('같은 슬러그의 포스트가 이미 존재합니다.');
+async function githubFetch(url: string, token: string, options: RequestInit = {}) {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    Accept: 'application/vnd.github.v3+json',
+    'Content-Type': 'application/json',
+    ...options.headers,
+  };
+  const res = await fetch(url, { ...options, headers });
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({ message: res.statusText }));
+    throw new Error(`GitHub API Error (${res.status}): ${error.message}`);
   }
-
-  // 파일 생성
-  const createUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-  const response = await fetch(createUrl, {
-    method: 'PUT',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/vnd.github.v3+json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      message: `Add new post: ${path}`,
-      content: Buffer.from(content).toString('base64'),
-      branch: 'main', // 또는 'master'
-    }),
-  });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(`GitHub API Error: ${error.message}`);
-  }
-
-  return response.json();
+  return res.json();
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { postType, title, summary, slug, link, images, content } = body;
+    const supabase = await createClient();
+    const { data: { session } } = await supabase.auth.getSession();
 
-    if (!title || !slug) {
-      return NextResponse.json(
-        { error: '제목과 슬러그는 필수입니다.' },
-        { status: 400 }
-      );
+    if (!session) {
+      return NextResponse.json({ error: '인증되지 않은 접근입니다. 관리자 로그인이 필요합니다.' }, { status: 401 });
     }
 
-    // 환경 변수 확인
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('permission_level')
+      .eq('id', session.user.id)
+      .single();
+
+    if (!profile || profile.permission_level < 30) {
+      return NextResponse.json({ error: '관리자 권한이 부족합니다. (permission_level < 30)' }, { status: 403 });
+    }
+
+    const body = await request.json();
+    const { postType, title, summary, slug, link, images, content, files } = body;
+
+    if (!title || !slug) {
+      return NextResponse.json({ error: '제목과 슬러그는 필수입니다.' }, { status: 400 });
+    }
+
     const token = process.env.GITHUB_TOKEN;
     const owner = process.env.GITHUB_OWNER;
     const repo = process.env.GITHUB_REPO;
 
     if (!token || !owner || !repo) {
-      return NextResponse.json(
-        { error: 'GitHub 설정이 필요합니다. 환경 변수를 확인하세요.' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'GitHub 설정이 필요합니다. 환경 변수를 확인하세요.' }, { status: 500 });
     }
 
-    // 폴더 경로 결정
     const folder = postType === 'work' ? 'projects' : 'posts';
     const filePath = `src/app/${postType}/${folder}/${slug}.mdx`;
 
-    // MDX 콘텐츠 생성
+    // 1. Build MDX Content
     let mdxContent = `---
 title: "${title}"
 publishedAt: "${getCurrentDate()}"
 summary: "${summary || '포스트 요약을 입력하세요.'}"`;
 
-    // 이미지 추가 (work인 경우)
     if (images && images.length > 0 && postType === 'work') {
       mdxContent += `\nimages:`;
       images.forEach((img: string) => {
-        if (img) {
-          mdxContent += `\n  - "${img}"`;
-        }
+        if (img) mdxContent += `\n  - "${img}"`;
       });
     }
 
-    // 팀 정보 추가
     mdxContent += `
 team:
   - name: "Luverse"
     role: "${postType === 'work' ? 'Software Engineer' : 'Developer & Creator'}"
     avatar: "/images/avatar.png"`;
 
-    // 링크 추가 (선택사항)
     if (link) {
-      mdxContent += `
-link: "${link}"`;
+      mdxContent += `\nlink: "${link}"`;
     }
 
-    mdxContent += `
----
+    mdxContent += `\n---\n\n${content || '## 소개\n\n여기에 내용을 작성하세요.'}\n`;
 
-${content || '## 소개\n\n여기에 내용을 작성하세요.'}
-`;
+    const baseUrl = `https://api.github.com/repos/${owner}/${repo}`;
 
-    // GitHub에 파일 생성
-    await createFileInGitHub(owner, repo, filePath, mdxContent, token);
+    // 2. Check if file already exists
+    try {
+      await githubFetch(`${baseUrl}/contents/${filePath}`, token);
+      return NextResponse.json({ error: '같은 슬러그의 포스트가 이미 존재합니다.' }, { status: 400 });
+    } catch (e: any) {
+      if (!e.message.includes('404')) {
+        throw e;
+      }
+    }
+
+    // 3. Get latest commit & tree
+    const refRes = await githubFetch(`${baseUrl}/git/refs/heads/main`, token).catch(() => 
+      githubFetch(`${baseUrl}/git/refs/heads/master`, token)
+    );
+    const commitSha = refRes.object.sha;
+    
+    const commitRes = await githubFetch(`${baseUrl}/git/commits/${commitSha}`, token);
+    const baseTreeSha = commitRes.tree.sha;
+
+    // 4. Create blobs for all files
+    const treeItems: Array<{ path: string, mode: string, type: string, sha: string }> = [];
+
+    // Markdown blob
+    const mdxBlob = await githubFetch(`${baseUrl}/git/blobs`, token, {
+      method: 'POST',
+      body: JSON.stringify({ content: mdxContent, encoding: 'utf-8' })
+    });
+    treeItems.push({ path: filePath, mode: '100644', type: 'blob', sha: mdxBlob.sha });
+
+    // Attachment blobs
+    if (files && Array.isArray(files)) {
+      for (const file of files) {
+        // Remove leading slash and prefix with public/ for static assets
+        const cleanPath = file.githubPath.replace(/^\//, ''); // e.g. images/blog/name.png
+        const fullPath = `public/${cleanPath}`;
+        
+        const fileBlob = await githubFetch(`${baseUrl}/git/blobs`, token, {
+          method: 'POST',
+          body: JSON.stringify({ content: file.base64Content, encoding: 'base64' })
+        });
+        treeItems.push({ path: fullPath, mode: '100644', type: 'blob', sha: fileBlob.sha });
+      }
+    }
+
+    // 5. Create new tree
+    const newTree = await githubFetch(`${baseUrl}/git/trees`, token, {
+      method: 'POST',
+      body: JSON.stringify({ base_tree: baseTreeSha, tree: treeItems })
+    });
+
+    // 6. Create new commit
+    const newCommit = await githubFetch(`${baseUrl}/git/commits`, token, {
+      method: 'POST',
+      body: JSON.stringify({
+        message: `Add new post: ${filePath} with ${treeItems.length - 1} attachments`,
+        tree: newTree.sha,
+        parents: [commitSha]
+      })
+    });
+
+    // 7. Update branch reference
+    const refName = refRes.ref.replace('refs/', '');
+    await githubFetch(`${baseUrl}/git/refs/${refName}`, token, {
+      method: 'PATCH',
+      body: JSON.stringify({ sha: newCommit.sha })
+    });
 
     return NextResponse.json({
       success: true,
       slug,
       path: filePath,
       url: `/${postType}/${slug}`,
-      message: 'GitHub에 커밋되었습니다. Vercel이 자동으로 배포합니다.',
+      message: 'GitHub에 성공적으로 원자성 커밋(Atomic Commit) 되었습니다.',
     });
   } catch (error: any) {
     console.error('Error creating post:', error);

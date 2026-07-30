@@ -3,8 +3,10 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { routes, protectedRoutes } from "@/resources";
-import { Flex, Spinner, Button, Heading, Column, PasswordInput } from "@once-ui-system/core";
+import { Flex, Spinner, Heading, Column } from "@once-ui-system/core";
 import NotFound from "@/app/not-found";
+import { createClient } from "@/utils/supabase/client";
+import Image from "next/image";
 
 interface RouteGuardProps {
   children: React.ReactNode;
@@ -13,17 +15,14 @@ interface RouteGuardProps {
 const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
   const pathname = usePathname();
   const [isRouteEnabled, setIsRouteEnabled] = useState(false);
-  const [isPasswordRequired, setIsPasswordRequired] = useState(false);
-  const [password, setPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [error, setError] = useState<string | undefined>(undefined);
+  const [authError, setAuthError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const performChecks = async () => {
       setLoading(true);
       setIsRouteEnabled(false);
-      setIsPasswordRequired(false);
       setIsAuthenticated(false);
 
       const checkRouteEnabled = () => {
@@ -47,11 +46,22 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
       setIsRouteEnabled(routeEnabled);
 
       if (protectedRoutes[pathname as keyof typeof protectedRoutes]) {
-        setIsPasswordRequired(true);
+        const supabase = createClient();
+        const { data: { session } } = await supabase.auth.getSession();
 
-        const response = await fetch("/api/check-auth");
-        if (response.ok) {
-          setIsAuthenticated(true);
+        if (session) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('permission_level')
+            .eq('id', session.user.id)
+            .single();
+
+          if (profile && profile.permission_level >= 30) {
+            setIsAuthenticated(true);
+          } else {
+            setAuthError("권한이 부족합니다. (Permission Level 30 이상 필요)");
+            await supabase.auth.signOut();
+          }
         }
       }
 
@@ -61,19 +71,11 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
     performChecks();
   }, [pathname]);
 
-  const handlePasswordSubmit = async () => {
-    const response = await fetch("/api/authenticate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password }),
-    });
-
-    if (response.ok) {
-      setIsAuthenticated(true);
-      setError(undefined);
-    } else {
-      setError("Incorrect password");
-    }
+  const handleMoringLogin = () => {
+    const loginUrl = new URL("https://account.moring.co/auth/login");
+    const fullNextUrl = `${window.location.origin}${pathname}`;
+    loginUrl.searchParams.set("next", encodeURIComponent(fullNextUrl));
+    window.location.href = loginUrl.toString();
   };
 
   if (loading) {
@@ -88,21 +90,56 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
     return <NotFound />;
   }
 
-  if (isPasswordRequired && !isAuthenticated) {
+  if (!isAuthenticated && protectedRoutes[pathname as keyof typeof protectedRoutes]) {
     return (
       <Column paddingY="128" maxWidth={24} gap="24" center>
+        <style>{`
+          .moring-login-btn {
+            width: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 20px;
+            background-color: #F2F4F6;
+            color: #191F28;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+            outline: none;
+          }
+          .moring-login-btn:hover {
+            background-color: #E5E8EB;
+          }
+          .moring-login-btn:active {
+            background-color: #D1D6DB;
+          }
+        `}</style>
         <Heading align="center" wrap="balance">
-          This page is password protected
+          Moring Auth Required
         </Heading>
         <Column fillWidth gap="8" horizontal="center">
-          <PasswordInput
-            id="password"
-            label="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            errorMessage={error}
-          />
-          <Button onClick={handlePasswordSubmit}>Submit</Button>
+          {authError && (
+            <div style={{ color: 'var(--danger-on-background-medium)', fontSize: '14px', marginBottom: '8px' }}>
+              {authError}
+            </div>
+          )}
+          <button
+            onClick={handleMoringLogin}
+            className="moring-login-btn"
+          >
+            <Image
+              src="/icons/moring.svg"
+              alt="Moring"
+              width={22}
+              height={22}
+              className="mr-2.5"
+              style={{ marginRight: '10px' }}
+            />
+            <span>Moring 로그인</span>
+          </button>
         </Column>
       </Column>
     );

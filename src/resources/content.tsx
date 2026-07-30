@@ -7,7 +7,7 @@ const person: Person = {
   name: `Luverse`,
   role: "Design Engineer",
   avatar: "/images/avatar.png",
-  email: "me@louis1618.shop",
+  email: "admin@louis1618.shop",
   location: "Asia/Seoul", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
   languages: ["Korean", "English"], // optional: Leave the array empty if you don't want to display languages
 };
@@ -154,10 +154,10 @@ const gallery: Gallery = {
   title: `갤러리`,
   description: `사진 모음`,
   images: [{
-      src: "/images/og/home.png",
-      alt: "image",
-      orientation: "vertical",
-    },
+    src: "/images/og/home.png",
+    alt: "image",
+    orientation: "vertical",
+  },
   ],
 };
 
