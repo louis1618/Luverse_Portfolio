@@ -2,3 +2,6 @@ allowBuilds:
   '@biomejs/biome': true
   '@parcel/watcher': true
   sharp: true
+  unrs-resolver: set this to true or false
+minimumReleaseAgeExclude:
+  - '@once-ui-system/core@1.8.0'
