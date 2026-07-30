@@ -69,8 +69,12 @@ export function useAdminDrafts(
         const storedStr = localStorage.getItem(AUTOSAVE_KEY) || "";
         
         if (currentStr !== storedStr) {
-          localStorage.setItem(AUTOSAVE_KEY, currentStr);
-          setLastSaved(new Date());
+          try {
+            localStorage.setItem(AUTOSAVE_KEY, currentStr);
+            setLastSaved(new Date());
+          } catch (e) {
+            console.error('Failed to auto-save to localStorage:', e);
+          }
         }
       }
     }, 1000);
@@ -87,7 +91,12 @@ export function useAdminDrafts(
     
     setDrafts((prev) => {
       const updated = [newDraft, ...prev].slice(0, 15); // Keep up to 15 drafts
-      localStorage.setItem(MANUAL_DRAFTS_KEY, JSON.stringify(updated));
+      try {
+        localStorage.setItem(MANUAL_DRAFTS_KEY, JSON.stringify(updated));
+      } catch (e) {
+        console.error('Failed to save manual draft to localStorage:', e);
+        alert('임시 저장에 실패했습니다. (브라우저 용량 초과일 수 있습니다.)');
+      }
       return updated;
     });
     

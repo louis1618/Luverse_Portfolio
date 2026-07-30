@@ -3,15 +3,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button, Column, Row, Text, Input, Textarea, Flex, Spinner, Icon } from '@once-ui-system/core';
-import { WysiwygEditor } from '@/components/WysiwygEditor';
-import { useAdminDrafts, ManualDraft, AdminPostState } from '@/hooks/useAdminDrafts';
-import { DraftListModal, DraftDiffModal } from '@/components/admin/DraftModals';
+import dynamic from 'next/dynamic';
 
-export interface PendingFile {
-  name: string;
-  file: File;
-  objectUrl: string;
-}
+const WysiwygEditor = dynamic(() => import('@/components/WysiwygEditor').then(mod => mod.WysiwygEditor), { 
+  ssr: false,
+  loading: () => <Flex fillWidth fillHeight horizontal="center" vertical="center" padding="64"><Spinner /></Flex>
+});
+import { useAdminDrafts, ManualDraft, AdminPostState } from '@/hooks/useAdminDrafts';
+
+const DraftListModal = dynamic(() => import('@/components/admin/DraftModals').then(mod => mod.DraftListModal), { ssr: false });
+const DraftDiffModal = dynamic(() => import('@/components/admin/DraftModals').then(mod => mod.DraftDiffModal), { ssr: false });
+
+
 
 export default function AdminPage() {
   const router = useRouter();
@@ -49,8 +52,7 @@ export default function AdminPage() {
     alert('현재 내용이 임시 저장되었습니다.');
   };
 
-  const [pendingFiles, setPendingFiles] = useState<PendingFile[]>([]);
-  const [coverImage, setCoverImage] = useState<PendingFile | null>(null);
+  const [coverImage, setCoverImage] = useState<string | null>(null);
 
   // Custom dropdown states
   const [isTypeDropdownOpen, setIsTypeDropdownOpen] = useState(false);
@@ -66,35 +68,7 @@ export default function AdminPage() {
     if (title || content) setIsDirty(true);
   }, [title, content]);
 
-  // Safely manage blob URLs lifecycle
-  const pendingFilesRef = useRef<PendingFile[]>([]);
-  const coverImageRef = useRef<PendingFile | null>(null);
 
-  useEffect(() => {
-    pendingFilesRef.current = pendingFiles;
-    coverImageRef.current = coverImage;
-  }, [pendingFiles, coverImage]);
-
-  useEffect(() => {
-    // Only cleanup on unmount
-    return () => {
-      pendingFilesRef.current.forEach(pf => URL.revokeObjectURL(pf.objectUrl));
-      if (coverImageRef.current) URL.revokeObjectURL(coverImageRef.current.objectUrl);
-    };
-  }, []);
-
-  const fileToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const result = reader.result as string;
-        const base64 = result.split(',')[1];
-        resolve(base64);
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
 
@@ -107,16 +81,27 @@ export default function AdminPage() {
       alert('이미지 파일만 첨부 가능합니다.');
       throw new Error('Invalid file type');
     }
-    if (file.size > 50 * 1024 * 1024) {
-      alert('50MB 이하의 이미지만 업로드 가능합니다.');
+    if (file.size > 4 * 1024 * 1024) {
+      alert('4MB 이하의 이미지만 업로드 가능합니다.');
       throw new Error('File too large');
     }
 
-    const base64 = await fileToBase64(file);
-    const objectUrl = `data:${file.type};base64,${base64}`;
-    const newPending: PendingFile = { name: file.name, file, objectUrl };
-    setPendingFiles(prev => [...prev, newPending]);
-    return objectUrl;
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('postType', postType);
+
+    const res = await fetch('/api/admin/upload-image', {
+      method: 'POST',
+      body: formData,
+    });
+    
+    const data = await res.json();
+    if (!res.ok) {
+      alert(data.error || '이미지 업로드에 실패했습니다.');
+      throw new Error(data.error);
+    }
+    
+    return data.url;
   };
 
   // Dropdown Outside Click & Keyboard
@@ -152,13 +137,25 @@ export default function AdminPage() {
     if (!file.type.startsWith('image/')) {
       return alert('지원하지 않는 파일 형식입니다. (JPG, PNG, WEBP 등 이미지 파일만 가능)');
     }
-    if (file.size > 50 * 1024 * 1024) {
-      return alert('50MB 이하의 이미지만 업로드 가능합니다.');
+    if (file.size > 4 * 1024 * 1024) {
+      return alert('4MB 이하의 이미지만 업로드 가능합니다.');
     }
 
-    const base64 = await fileToBase64(file);
-    const objectUrl = `data:${file.type};base64,${base64}`;
-    setCoverImage({ name: file.name, file, objectUrl });
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('postType', postType);
+
+    const res = await fetch('/api/admin/upload-image', {
+      method: 'POST',
+      body: formData,
+    });
+    
+    const data = await res.json();
+    if (res.ok) {
+      setCoverImage(data.url);
+    } else {
+      alert(data.error || '커버 이미지 업로드에 실패했습니다.');
+    }
   };
 
   const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -185,40 +182,9 @@ export default function AdminPage() {
     setPublishStatus('파일 및 이미지 변환 중...');
 
     try {
-      // Filter out files that were deleted from the editor before uploading
-      const activePendingFiles = pendingFiles.filter(pf => content.includes(pf.objectUrl));
+      setPublishStatus('GitHub에 커밋 중...');
 
-      const allFiles = [...activePendingFiles];
-      if (coverImage) allFiles.push(coverImage);
-
-      const filesPayload = await Promise.all(
-        allFiles.map(async (pf) => {
-          const ext = pf.name.split('.').pop() || 'png';
-          const uniqueName = `${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${ext}`;
-          const githubPath = `/images/${postType}/${uniqueName}`;
-          return {
-            originalUrl: pf.objectUrl,
-            githubPath,
-            base64Content: await fileToBase64(pf.file)
-          };
-        })
-      );
-
-      setPublishStatus('GitHub에 원자성 커밋 업로드 중...');
-
-      let finalContent = content;
-      let finalCoverImagePath = '';
-
-      filesPayload.forEach(fp => {
-        // Replace in Markdown content
-        finalContent = finalContent.split(fp.originalUrl).join(fp.githubPath);
-        // Identify if it's the cover image
-        if (coverImage && fp.originalUrl === coverImage.objectUrl) {
-          finalCoverImagePath = fp.githubPath;
-        }
-      });
-
-      const imageList = finalCoverImagePath ? [finalCoverImagePath] : [];
+      const imageList = coverImage ? [coverImage] : [];
 
       const res = await fetch('/api/admin/create-post', {
         method: 'POST',
@@ -230,8 +196,7 @@ export default function AdminPage() {
           slug: finalSlug,
           link,
           images: imageList,
-          content: finalContent,
-          files: filesPayload
+          content,
         }),
       });
 
@@ -241,7 +206,6 @@ export default function AdminPage() {
       setPublishStatus('발행 완료!');
       setIsDirty(false);
       clearAutoSave();
-      setPendingFiles([]);
       setCoverImage(null);
       setTimeout(() => {
         setIsPublishModalOpen(false);
@@ -350,13 +314,6 @@ export default function AdminPage() {
 
         {/* Action Bar */}
         <Row fillWidth horizontal="end" vertical="center" paddingBottom="16" gap="24">
-          <Row gap="16" vertical="center">
-            {pendingFiles.length > 0 && (
-              <Text variant="label-default-s" onBackground="brand-strong">
-                첨부 대기: {pendingFiles.length}건
-              </Text>
-            )}
-          </Row>
 
           <Row gap="8" vertical="center">
             {lastSaved && (
@@ -526,7 +483,7 @@ export default function AdminPage() {
                   <Column gap="8">
                     <div style={{ position: 'relative', width: '100%', height: '160px', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--neutral-border-weak)' }}>
                       <img
-                        src={coverImage.objectUrl}
+                        src={coverImage}
                         alt="Cover Preview"
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       />
@@ -542,7 +499,7 @@ export default function AdminPage() {
                       </div>
                     </div>
                     <Text variant="body-default-xs" onBackground="neutral-weak" style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
-                      {coverImage.name}
+                      {coverImage.split('/').pop()}
                     </Text>
                   </Column>
                 ) : (
@@ -562,7 +519,7 @@ export default function AdminPage() {
                     <Icon name="upload" size="l" onBackground="neutral-weak" />
                     <Column align="center" gap="4">
                       <Text variant="body-default-m" onBackground="neutral-strong" weight="strong">클릭하거나 이미지를 드롭하세요</Text>
-                      <Text variant="body-default-xs" onBackground="neutral-weak">지원 형식: JPG, PNG, WEBP (최대 50MB)</Text>
+                      <Text variant="body-default-xs" onBackground="neutral-weak">지원 형식: JPG, PNG, WEBP (최대 4MB)</Text>
                     </Column>
                   </div>
                 )}
