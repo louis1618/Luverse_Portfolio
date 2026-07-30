@@ -7,6 +7,7 @@ export interface AdminPostState {
   slug: string;
   link: string;
   content: string;
+  coverImage?: string | null;
 }
 
 export interface ManualDraft extends AdminPostState {
@@ -23,6 +24,7 @@ export function useAdminDrafts(
 ) {
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [drafts, setDrafts] = useState<ManualDraft[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
   const isInitialMount = useRef(true);
 
   // Load manual drafts
@@ -50,6 +52,8 @@ export function useAdminDrafts(
       }
     } catch (e) {
       console.error("Failed to parse auto-save", e);
+    } finally {
+      setIsLoaded(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Only on mount
@@ -122,6 +126,7 @@ export function useAdminDrafts(
   }, []);
 
   return {
+    isLoaded,
     lastSaved,
     drafts,
     saveManualDraft,

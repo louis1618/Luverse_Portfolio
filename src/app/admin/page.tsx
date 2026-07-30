@@ -25,6 +25,7 @@ export default function AdminPage() {
   const [slug, setSlug] = useState('');
   const [link, setLink] = useState('');
   const [content, setContent] = useState('');
+  const [coverImage, setCoverImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
   const [publishStatus, setPublishStatus] = useState<string>('');
@@ -33,7 +34,7 @@ export default function AdminPage() {
   const [selectedDraft, setSelectedDraft] = useState<ManualDraft | null>(null);
 
   const currentState: AdminPostState = {
-    postType, title, summary, slug, link, content
+    postType, title, summary, slug, link, content, coverImage
   };
 
   const handleRestore = (draft: AdminPostState) => {
@@ -43,16 +44,15 @@ export default function AdminPage() {
     setSlug(draft.slug || '');
     setLink(draft.link || '');
     setContent(draft.content || '');
+    setCoverImage(draft.coverImage || null);
   };
 
-  const { lastSaved, drafts, saveManualDraft, restoreDraft, clearAutoSave, deleteDraft } = useAdminDrafts(currentState, handleRestore);
+  const { isLoaded, lastSaved, drafts, saveManualDraft, restoreDraft, clearAutoSave, deleteDraft } = useAdminDrafts(currentState, handleRestore);
 
   const onSaveManualDraft = () => {
     saveManualDraft();
     alert('현재 내용이 임시 저장되었습니다.');
   };
-
-  const [coverImage, setCoverImage] = useState<string | null>(null);
 
   // Custom dropdown states
   const [isTypeDropdownOpen, setIsTypeDropdownOpen] = useState(false);
@@ -375,11 +375,13 @@ export default function AdminPage() {
               lineHeight: 1.2,
             }}
           />
-          <WysiwygEditor
-            initialContent=""
-            onChange={handleEditorChange}
-            onUploadImage={handleUploadImage}
-          />
+          {isLoaded && (
+            <WysiwygEditor
+              initialContent={content}
+              onChange={handleEditorChange}
+              onUploadImage={handleUploadImage}
+            />
+          )}
         </Column>
 
       </Column>
