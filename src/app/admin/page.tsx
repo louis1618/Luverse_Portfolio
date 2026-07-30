@@ -25,6 +25,7 @@ export default function AdminPage() {
   const [slug, setSlug] = useState('');
   const [link, setLink] = useState('');
   const [content, setContent] = useState('');
+  const [editorKey, setEditorKey] = useState(0);
   const [coverImage, setCoverImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
@@ -45,6 +46,7 @@ export default function AdminPage() {
     setLink(draft.link || '');
     setContent(draft.content || '');
     setCoverImage(draft.coverImage || null);
+    setEditorKey(prev => prev + 1);
   };
 
   const { isLoaded, lastSaved, drafts, saveManualDraft, restoreDraft, clearAutoSave, deleteDraft } = useAdminDrafts(currentState, handleRestore);
@@ -101,7 +103,7 @@ export default function AdminPage() {
       throw new Error(data.error);
     }
     
-    return data.url;
+    return data.previewUrl;
   };
 
   // Dropdown Outside Click & Keyboard
@@ -152,7 +154,7 @@ export default function AdminPage() {
     
     const data = await res.json();
     if (res.ok) {
-      setCoverImage(data.url);
+      setCoverImage(data.previewUrl);
     } else {
       alert(data.error || '커버 이미지 업로드에 실패했습니다.');
     }
@@ -184,7 +186,12 @@ export default function AdminPage() {
     try {
       setPublishStatus('GitHub에 커밋 중...');
 
-      const imageList = coverImage ? [coverImage] : [];
+      // Convert GitHub Raw preview URLs back to local public paths
+      const rawUrlPattern = /https:\/\/raw\.githubusercontent\.com\/[^/]+\/[^/]+\/main\/public(\/images\/[^)"]+)/g;
+      const finalContent = content.replace(rawUrlPattern, '$1');
+      const finalCoverImage = coverImage ? coverImage.replace(rawUrlPattern, '$1') : null;
+
+      const imageList = finalCoverImage ? [finalCoverImage] : [];
 
       const res = await fetch('/api/admin/create-post', {
         method: 'POST',
@@ -196,7 +203,7 @@ export default function AdminPage() {
           slug: finalSlug,
           link,
           images: imageList,
-          content,
+          content: finalContent,
         }),
       });
 
@@ -377,6 +384,7 @@ export default function AdminPage() {
           />
           {isLoaded && (
             <WysiwygEditor
+              key={`editor-${editorKey}`}
               initialContent={content}
               onChange={handleEditorChange}
               onUploadImage={handleUploadImage}

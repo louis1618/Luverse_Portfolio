@@ -68,11 +68,12 @@ export async function POST(request: Request) {
     const githubPath = `public/images/${folder}/${filename}`;
     const publicPath = `/images/${folder}/${filename}`;
 
-    await uploadFileToGitHub(owner, repo, githubPath, base64Content, token);
+    const githubRes = await uploadFileToGitHub(owner, repo, githubPath, base64Content, token);
 
     return NextResponse.json({
       success: true,
       url: publicPath,
+      previewUrl: githubRes.content.download_url,
       message: '이미지가 성공적으로 업로드되었습니다.',
     });
   } catch (error: any) {
