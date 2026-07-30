@@ -4,6 +4,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button, Column, Row, Text, Input, Textarea, Flex, Spinner, Icon } from '@once-ui-system/core';
 import { WysiwygEditor } from '@/components/WysiwygEditor';
+import { useAdminDrafts, ManualDraft, AdminPostState } from '@/hooks/useAdminDrafts';
+import { DraftListModal, DraftDiffModal } from '@/components/admin/DraftModals';
 
 export interface PendingFile {
   name: string;
@@ -23,6 +25,29 @@ export default function AdminPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
   const [publishStatus, setPublishStatus] = useState<string>('');
+  
+  const [isDraftListOpen, setIsDraftListOpen] = useState(false);
+  const [selectedDraft, setSelectedDraft] = useState<ManualDraft | null>(null);
+
+  const currentState: AdminPostState = {
+    postType, title, summary, slug, link, content
+  };
+
+  const handleRestore = (draft: AdminPostState) => {
+    setPostType(draft.postType || 'blog');
+    setTitle(draft.title || '');
+    setSummary(draft.summary || '');
+    setSlug(draft.slug || '');
+    setLink(draft.link || '');
+    setContent(draft.content || '');
+  };
+
+  const { lastSaved, drafts, saveManualDraft, restoreDraft, clearAutoSave } = useAdminDrafts(currentState, handleRestore);
+
+  const onSaveManualDraft = () => {
+    saveManualDraft();
+    alert('현재 내용이 임시 저장되었습니다.');
+  };
 
   const [pendingFiles, setPendingFiles] = useState<PendingFile[]>([]);
   const [coverImage, setCoverImage] = useState<PendingFile | null>(null);
@@ -215,6 +240,7 @@ export default function AdminPage() {
 
       setPublishStatus('발행 완료!');
       setIsDirty(false);
+      clearAutoSave();
       setPendingFiles([]);
       setCoverImage(null);
       setTimeout(() => {
@@ -332,14 +358,35 @@ export default function AdminPage() {
             )}
           </Row>
 
-          <Button
-            variant="primary"
-            size="m"
-            onClick={() => setIsPublishModalOpen(true)}
-            disabled={!title}
-          >
-            발행 설정
-          </Button>
+          <Row gap="8" vertical="center">
+            {lastSaved && (
+              <Text variant="body-default-xs" onBackground="neutral-weak">
+                자동 저장됨: {lastSaved.toLocaleTimeString()}
+              </Text>
+            )}
+            <Button
+              variant="secondary"
+              size="m"
+              onClick={onSaveManualDraft}
+            >
+              임시 저장
+            </Button>
+            <Button
+              variant="tertiary"
+              size="m"
+              onClick={() => setIsDraftListOpen(true)}
+            >
+              임시 저장 보기 ({drafts.length})
+            </Button>
+            <Button
+              variant="primary"
+              size="m"
+              onClick={() => setIsPublishModalOpen(true)}
+              disabled={!title}
+            >
+              발행 설정
+            </Button>
+          </Row>
         </Row>
 
         {/* Document Area */}
@@ -544,6 +591,25 @@ export default function AdminPage() {
 
           </Column>
         </div>
+      )}
+
+      {isDraftListOpen && !selectedDraft && (
+        <DraftListModal 
+          drafts={drafts} 
+          onClose={() => setIsDraftListOpen(false)}
+          onSelectDraft={(draft) => setSelectedDraft(draft)}
+        />
+      )}
+      {selectedDraft && (
+        <DraftDiffModal
+          current={currentState}
+          draft={selectedDraft}
+          onClose={() => setSelectedDraft(null)}
+          onRestore={(draft) => {
+            restoreDraft(draft);
+            setIsDraftListOpen(false);
+          }}
+        />
       )}
     </>
   );
