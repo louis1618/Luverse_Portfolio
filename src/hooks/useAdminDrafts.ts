@@ -54,22 +54,29 @@ export function useAdminDrafts(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Only on mount
 
-  // Auto-save logic (Debounced)
+  const stateRef = useRef(currentState);
+  
   useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
-    }
-
-    const handler = setTimeout(() => {
-      if (currentState.title || currentState.content) {
-        localStorage.setItem(AUTOSAVE_KEY, JSON.stringify(currentState));
-        setLastSaved(new Date());
-      }
-    }, 1500);
-
-    return () => clearTimeout(handler);
+    stateRef.current = currentState;
   }, [currentState]);
+
+  // Auto-save logic (Interval: 1 second)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const state = stateRef.current;
+      if (state.title || state.content) {
+        const currentStr = JSON.stringify(state);
+        const storedStr = localStorage.getItem(AUTOSAVE_KEY) || "";
+        
+        if (currentStr !== storedStr) {
+          localStorage.setItem(AUTOSAVE_KEY, currentStr);
+          setLastSaved(new Date());
+        }
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const saveManualDraft = useCallback(() => {
     const newDraft: ManualDraft = {
