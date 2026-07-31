@@ -108,6 +108,22 @@ export default async function RootLayout({
             `,
           }}
         />
+        {/* Google Analytics (GA4) */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-YH42SE8T6E"
+        />
+        <script
+          id="ga4-init"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-YH42SE8T6E');
+            `,
+          }}
+        />
       </head>
       <Providers>
         <Column

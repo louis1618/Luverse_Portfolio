@@ -52,11 +52,9 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
           if (profile && profile.permission_level >= 30) {
             setIsAuthenticated(true);
           } else {
-            setAuthError("권한이 부족합니다. (Permission Level 30 이상 필요)");
+            setAuthError("접근 권한이 없습니다.");
             await signOut();
           }
-        } else {
-          setAuthError("세션을 찾을 수 없습니다. 로그인을 진행해 주세요.");
         }
       }
 
