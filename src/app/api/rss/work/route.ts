@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export const dynamic = 'force-static';
 
 export async function GET() {
-  const posts = getPosts(["src", "app", "work", "posts"]);
+  const posts = getPosts(["src", "app", "work", "projects"]);
 
   // Sort posts by date (newest first)
   const sortedPosts = posts.sort((a, b) => {
