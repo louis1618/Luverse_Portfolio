@@ -77,7 +77,7 @@ export default function About() {
           <TableOfContents structure={structure} about={about} />
         </Column>
       )}
-      <Row fillWidth s={{ direction: "column"}} horizontal="center">
+      <Row fillWidth s={{ direction: "column" }} horizontal="center">
         {about.avatar.display && (
           <Column
             className={styles.avatar}
@@ -156,7 +156,7 @@ export default function About() {
               <Row
                 className={styles.blockAlign}
                 paddingTop="20"
-                paddingBottom="8"
+                paddingBottom="0"
                 gap="8"
                 wrap
                 horizontal="center"
@@ -195,7 +195,7 @@ export default function About() {
           </Column>
 
           {about.intro.display && (
-            <Column textVariant="body-default-l" fillWidth gap="m" marginBottom="xl">
+            <Column textVariant="body-default-l" fillWidth gap="xl" marginBottom="xl">
               {about.intro.description}
             </Column>
           )}

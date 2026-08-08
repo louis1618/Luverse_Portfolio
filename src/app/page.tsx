@@ -3,7 +3,6 @@ import {
   Text,
   Button,
   Avatar,
-  RevealFx,
   Column,
   Badge,
   Row,
@@ -44,65 +43,60 @@ export default function Home() {
       />
       <Column fillWidth horizontal="center" gap="m">
         <Column maxWidth="s" horizontal="center" align="center">
-          {home.featured.display && (
-            <RevealFx
-              fillWidth
-              horizontal="center"
-              paddingTop="16"
-              paddingBottom="32"
-              paddingLeft="12"
-            >
-              <Badge
-                background="brand-alpha-weak"
-                paddingX="12"
-                paddingY="4"
-                onBackground="neutral-strong"
-                textVariant="label-default-s"
-                arrow={false}
-                href={home.featured.href}
-              >
-                <Row paddingY="2">{home.featured.title}</Row>
-              </Badge>
-            </RevealFx>
-          )}
-          <RevealFx translateY="4" fillWidth horizontal="center" paddingBottom="16">
+
+          <Column fillWidth horizontal="center" paddingBottom="16">
             <Heading wrap="balance" variant="display-strong-l">
               {home.headline}
             </Heading>
-          </RevealFx>
-          <RevealFx translateY="8" delay={0.2} fillWidth horizontal="center" paddingBottom="32">
+          </Column>
+          <Column fillWidth horizontal="center" paddingBottom="32">
             <Text wrap="balance" onBackground="neutral-weak" variant="heading-default-xl">
               {home.subline}
             </Text>
-          </RevealFx>
-          <RevealFx paddingTop="12" delay={0.4} horizontal="center" paddingLeft="12">
-            <Button
-              id="about"
-              data-border="rounded"
-              href={about.path}
-              variant="secondary"
-              size="m"
-              weight="default"
-              arrowIcon
-            >
-              <Row gap="8" vertical="center" paddingRight="4">
-                {about.avatar.display && (
-                  <Avatar
-                    marginRight="8"
-                    style={{ marginLeft: "-0.75rem" }}
-                    src={person.avatar}
-                    size="m"
-                  />
-                )}
-                {about.title}
-              </Row>
-            </Button>
-          </RevealFx>
+          </Column>
+          <Column paddingTop="12" horizontal="center">
+            <Row gap="16" vertical="center" horizontal="center">
+              <Button
+                id="about"
+                data-border="rounded"
+                href={about.path}
+                variant="secondary"
+                size="m"
+                weight="default"
+                arrowIcon
+              >
+                <Row gap="8" vertical="center" paddingRight="4">
+                  {about.avatar.display && (
+                    <Avatar
+                      marginRight="8"
+                      style={{ marginLeft: "-0.75rem" }}
+                      src={person.avatar}
+                      size="m"
+                    />
+                  )}
+                  {about.title}
+                </Row>
+              </Button>
+              {home.action.display && (
+                <Button
+                  id="action"
+                  data-border="rounded"
+                  href={home.action.href}
+                  variant="secondary"
+                  size="m"
+                  weight="default"
+                  arrowIcon
+                >
+                  <Row gap="8" vertical="center" paddingX="4">
+                    {home.action.title}
+                  </Row>
+                </Button>
+              )}
+            </Row>
+          </Column>
         </Column>
       </Column>
-      <RevealFx translateY="16" delay={0.6}>
-        <Projects range={[1, 1]} />
-      </RevealFx>
+      <Projects range={[1, 1]} />
       {routes["/blog"] && (
         <Column fillWidth gap="24" marginBottom="l">
           <Row fillWidth paddingRight="64">

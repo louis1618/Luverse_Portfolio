@@ -91,8 +91,8 @@ export interface Home extends BasePageConfig {
   image: `/images/${string}` | string;
   /** The headline of the home page */
   headline: React.ReactNode;
-  /** Featured badge, which appears above the headline */
-  featured: {
+  /** Additional action button next to the about button */
+  action: {
     display: boolean;
     title: React.ReactNode;
     href: string;

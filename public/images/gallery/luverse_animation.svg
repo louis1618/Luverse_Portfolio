@@ -1,0 +1,664 @@
+<svg data-luverse-motion="signature-v6" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="470 550 1100 950"
+     preserveAspectRatio="xMidYMid meet"
+     role="img"
+     aria-labelledby="title desc">
+  <title id="title">Luverse Signature Motion v6</title>
+  <desc id="desc">A premium transparent Luverse logo animation with refined vector motion, clean reverse deconstruction, and no blur popping.</desc>
+
+  <defs>
+    <path id="shape-l-upper" pathLength="1" d="M 587 640 L 618 647 L 629 651 L 649 661 L 664 671 L 682 688 L 693 702 L 706 726 L 711 739 L 717 762 L 721 794 L 722 1055 L 721 1073 L 742 1057 L 747 1052 L 771 1034 L 789 1022 L 793 1017 L 792 791 L 789 764 L 785 746 L 779 729 L 771 712 L 758 693 L 753 687 L 737 672 L 726 664 L 707 654 L 691 648 L 660 641 L 642 639 L 599 639 L 598 640 Z"/>
+    <path id="shape-star-top" pathLength="1" d="M 1092 702 L 1092 705 L 1090 709 L 1089 715 L 1087 719 L 1084 722 L 1077 725 L 1066 727 L 1078 730 L 1084 733 L 1087 736 L 1091 746 L 1091 749 L 1092 750 L 1092 753 L 1096 738 L 1100 733 L 1107 730 L 1114 729 L 1119 727 L 1108 725 L 1100 722 L 1096 717 Z"/>
+    <path id="shape-star-main" pathLength="1" d="M 1285 785 L 1285 789 L 1283 794 L 1283 798 L 1281 806 L 1276 820 L 1273 825 L 1267 831 L 1261 834 L 1249 838 L 1229 842 L 1259 850 L 1267 854 L 1272 859 L 1276 867 L 1281 881 L 1285 899 L 1290 877 L 1293 868 L 1297 860 L 1303 854 L 1311 850 L 1340 842 L 1333 840 L 1329 840 L 1310 834 L 1303 830 L 1297 824 L 1293 816 L 1290 807 Z"/>
+    <path id="shape-dot-top-right" pathLength="1" d="M 1207 789 L 1205 792 L 1205 797 L 1208 801 L 1215 801 L 1218 797 L 1218 791 L 1215 788 L 1209 788 Z"/>
+    <path id="shape-comet-tip" pathLength="1" d="M 1492 804 L 1471 805 L 1417 811 L 1373 818 L 1358 819 L 1349 821 L 1355 822 L 1371 830 L 1374 830 L 1386 826 L 1446 812 L 1481 805 Z"/>
+    <path id="shape-l-shoulder" pathLength="1" d="M 919 808 L 919 811 L 935 813 L 958 820 L 971 827 L 980 835 L 986 843 L 991 853 L 994 864 L 996 879 L 996 904 L 1012 898 L 1031 889 L 1067 875 L 1067 808 Z"/>
+    <path id="shape-dot-upper" pathLength="1" d="M 1129 823 L 1123 827 L 1122 829 L 1122 836 L 1126 841 L 1128 842 L 1134 842 L 1136 841 L 1140 836 L 1141 832 L 1140 828 L 1136 824 Z"/>
+    <path id="shape-u-body" pathLength="1" d="M 1436 841 L 1427 842 L 1396 850 L 1378 856 L 1364 859 L 1366 867 L 1366 1176 L 1365 1193 L 1361 1225 L 1354 1255 L 1344 1282 L 1335 1299 L 1317 1323 L 1309 1331 L 1296 1341 L 1274 1353 L 1256 1359 L 1234 1363 L 1215 1364 L 1200 1363 L 1182 1360 L 1165 1355 L 1149 1348 L 1133 1338 L 1123 1330 L 1109 1316 L 1101 1337 L 1090 1359 L 1083 1370 L 1084 1373 L 1090 1376 L 1095 1380 L 1123 1393 L 1141 1399 L 1167 1405 L 1191 1408 L 1218 1409 L 1247 1407 L 1270 1403 L 1286 1399 L 1308 1391 L 1330 1380 L 1345 1370 L 1359 1359 L 1381 1337 L 1400 1311 L 1413 1287 L 1424 1258 L 1431 1229 L 1435 1199 L 1436 1184 Z"/>
+    <path id="shape-star-left-small" pathLength="1" d="M 872 842 L 871 846 L 867 850 L 863 851 L 867 852 L 871 856 L 872 861 L 873 856 L 877 852 L 881 851 L 876 849 L 873 846 Z"/>
+    <path id="shape-swoosh-upper" pathLength="1" d="M 1239 871 L 1225 867 L 1221 867 L 1201 862 L 1193 858 L 1160 868 L 1094 891 L 1066 902 L 1061 905 L 1046 910 L 1032 917 L 1018 922 L 985 937 L 912 974 L 859 1005 L 834 1021 L 786 1054 L 736 1093 L 693 1131 L 661 1163 L 635 1192 L 606 1228 L 575 1274 L 552 1315 L 571 1289 L 598 1257 L 628 1225 L 663 1191 L 698 1160 L 721 1141 L 726 1138 L 731 1133 L 776 1100 L 813 1075 L 845 1055 L 903 1021 L 914 1016 L 925 1009 L 955 993 L 1009 966 L 1101 924 L 1183 891 L 1199 886 L 1207 882 Z"/>
+    <path id="shape-dot-left" pathLength="1" d="M 924 885 L 917 889 L 914 893 L 913 896 L 913 905 L 915 910 L 919 914 L 926 917 L 934 916 L 939 913 L 944 905 L 944 897 L 942 892 L 937 887 L 933 885 Z"/>
+    <path id="shape-star-left" pathLength="1" d="M 856 943 L 856 947 L 853 954 L 850 956 L 841 959 L 844 959 L 850 961 L 854 965 L 857 974 L 857 971 L 859 965 L 862 962 L 872 958 L 863 956 L 858 951 Z"/>
+    <path id="shape-dot-center-small" pathLength="1" d="M 1155 943 L 1153 945 L 1153 949 L 1154 951 L 1157 952 L 1160 950 L 1161 946 L 1158 943 Z"/>
+    <path id="shape-dot-right" pathLength="1" d="M 1207 950 L 1202 953 L 1200 957 L 1200 962 L 1203 967 L 1207 969 L 1212 969 L 1218 964 L 1219 957 L 1216 952 L 1212 950 Z"/>
+    <path id="shape-inner-slash" pathLength="1" d="M 1067 968 L 1055 972 L 996 1000 L 996 1015 L 1019 1009 L 1039 1005 L 1062 1002 L 1067 1000 Z"/>
+    <path id="shape-dot-lower-small" pathLength="1" d="M 1106 977 L 1105 981 L 1102 985 L 1096 986 L 1102 988 L 1105 991 L 1106 995 L 1107 990 L 1109 988 L 1116 986 L 1109 985 L 1107 983 Z"/>
+    <path id="shape-swoosh-lower" pathLength="1" d="M 1168 1017 L 1143 1017 L 1109 1020 L 1079 1024 L 1019 1035 L 977 1046 L 936 1059 L 894 1075 L 862 1089 L 830 1105 L 810 1116 L 790 1129 L 785 1131 L 750 1154 L 719 1177 L 679 1211 L 637 1254 L 614 1282 L 629 1267 L 652 1247 L 678 1226 L 701 1209 L 752 1176 L 815 1142 L 873 1117 L 915 1102 L 944 1093 L 999 1079 L 1036 1072 L 1069 1068 L 1086 1055 L 1112 1039 L 1152 1021 L 1161 1019 L 1165 1017 Z"/>
+    <path id="shape-l-inner" pathLength="1" d="M 1066 1094 L 1061 1094 L 1060 1095 L 1047 1096 L 1022 1100 L 996 1106 L 996 1184 L 1000 1224 L 1003 1240 L 1010 1265 L 1017 1283 L 1029 1305 L 1046 1289 L 1056 1277 L 1066 1263 L 1076 1246 L 1070 1217 L 1067 1190 L 1066 1174 Z"/>
+    <path id="shape-l-base" pathLength="1" d="M 646 1404 L 647 1408 L 975 1408 L 1022 1407 L 1032 1398 L 1046 1382 L 1060 1362 L 1067 1350 L 1076 1332 L 1083 1315 L 1093 1284 L 1100 1253 L 1093 1266 L 1076 1291 L 1067 1302 L 1047 1322 L 1038 1329 L 1022 1339 L 1012 1344 L 994 1351 L 974 1356 L 944 1360 L 880 1360 L 850 1358 L 811 1354 L 802 1352 L 794 1352 L 792 1349 L 793 1317 L 792 1183 L 750 1207 L 722 1226 L 722 1321 L 719 1348 L 716 1360 L 709 1375 L 697 1388 L 693 1391 L 681 1397 L 663 1402 L 652 1404 Z"/>
+
+    <linearGradient id="fill-main" x1="580" y1="630" x2="1440" y2="1420" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="var(--base)"/>
+      <stop offset="0.25" stop-color="var(--base-soft)"/>
+      <stop offset="0.52" stop-color="var(--highlight)"/>
+      <stop offset="0.76" stop-color="var(--base-soft)"/>
+      <stop offset="1" stop-color="var(--base)"/>
+    </linearGradient>
+
+    <linearGradient id="fill-cool" x1="540" y1="1390" x2="1460" y2="690" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="var(--accent-deep)" stop-opacity="0"/>
+      <stop offset="0.18" stop-color="var(--accent)" stop-opacity="0.10"/>
+      <stop offset="0.48" stop-color="var(--base)" stop-opacity="0.20"/>
+      <stop offset="0.76" stop-color="var(--accent-soft)" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="var(--accent-deep)" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="trace-gradient" x1="545" y1="1365" x2="1440" y2="700" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="var(--accent-deep)" stop-opacity="0"/>
+      <stop offset="0.18" stop-color="var(--accent-soft)" stop-opacity="0.75"/>
+      <stop offset="0.50" stop-color="var(--base)" stop-opacity="1"/>
+      <stop offset="0.80" stop-color="var(--accent-soft)" stop-opacity="0.70"/>
+      <stop offset="1" stop-color="var(--accent-deep)" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="rim-gradient" x1="630" y1="760" x2="1410" y2="1375" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="var(--base)" stop-opacity="0.95"/>
+      <stop offset="0.54" stop-color="var(--base)" stop-opacity="0.20"/>
+      <stop offset="1" stop-color="var(--accent-soft)" stop-opacity="0.80"/>
+    </linearGradient>
+
+    <linearGradient id="energy-gradient" x1="560" y1="1260" x2="1490" y2="790" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
+      <stop offset="0.42" stop-color="var(--base)" stop-opacity="0.96"/>
+      <stop offset="0.58" stop-color="var(--base)" stop-opacity="0.96"/>
+      <stop offset="1" stop-color="var(--accent)" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="shine-gradient" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="var(--base)" stop-opacity="0"/>
+      <stop offset="0.42" stop-color="var(--base)" stop-opacity="0"/>
+      <stop offset="0.50" stop-color="var(--base)" stop-opacity="1"/>
+      <stop offset="0.58" stop-color="var(--accent-soft)" stop-opacity="0.48"/>
+      <stop offset="1" stop-color="var(--base)" stop-opacity="0"/>
+    </linearGradient>
+
+    <radialGradient id="core-glow-gradient" cx="50%" cy="52%" r="58%">
+      <stop offset="0" stop-color="var(--base)" stop-opacity="0.78"/>
+      <stop offset="0.26" stop-color="var(--accent-soft)" stop-opacity="0.34"/>
+      <stop offset="0.56" stop-color="var(--halo)" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="var(--accent-deep)" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="star-gradient" cx="46%" cy="40%" r="80%">
+      <stop offset="0" stop-color="var(--spark)"/>
+      <stop offset="0.72" stop-color="var(--base)"/>
+      <stop offset="1" stop-color="var(--accent-soft)"/>
+    </radialGradient>
+
+    <filter id="glow-soft" x="-90%" y="-90%" width="280%" height="280%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="18" result="b1"/>
+      <feColorMatrix in="b1" type="matrix" values="0.16 0 0 0 0.12  0 0.28 0 0 0.23  0 0 1 0 0.90  0 0 0 0.78 0" result="c1"/>
+    </filter>
+
+    <filter id="glow-logo" x="-80%" y="-80%" width="260%" height="260%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6.8" result="b1"/>
+      <feColorMatrix in="b1" type="matrix" values="0.16 0 0 0 0.10  0 0.34 0 0 0.20  0 0 1 0 0.86  0 0 0 0.62 0" result="c1"/>
+      <feMerge>
+        <feMergeNode in="c1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="glow-star" x="-180%" y="-180%" width="460%" height="460%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10.0" result="b1"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3.0" result="b2"/>
+      <feMerge>
+        <feMergeNode in="b1"/>
+        <feMergeNode in="b2"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="glow-shine" x="-150%" y="-150%" width="400%" height="400%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="5.6"/>
+    </filter>
+
+    <clipPath id="logo-clip" clipPathUnits="userSpaceOnUse">
+      <use href="#shape-l-upper"/>
+      <use href="#shape-star-top"/>
+      <use href="#shape-star-main"/>
+      <use href="#shape-dot-top-right"/>
+      <use href="#shape-comet-tip"/>
+      <use href="#shape-l-shoulder"/>
+      <use href="#shape-dot-upper"/>
+      <use href="#shape-u-body"/>
+      <use href="#shape-star-left-small"/>
+      <use href="#shape-swoosh-upper"/>
+      <use href="#shape-dot-left"/>
+      <use href="#shape-star-left"/>
+      <use href="#shape-dot-center-small"/>
+      <use href="#shape-dot-right"/>
+      <use href="#shape-inner-slash"/>
+      <use href="#shape-dot-lower-small"/>
+      <use href="#shape-swoosh-lower"/>
+      <use href="#shape-l-inner"/>
+      <use href="#shape-l-base"/>
+    </clipPath>
+
+    <mask id="logo-mask" maskUnits="userSpaceOnUse" x="470" y="550" width="1100" height="950">
+      <rect x="470" y="550" width="1100" height="950" fill="black"/>
+      <use href="#shape-l-upper"/>
+      <use href="#shape-star-top"/>
+      <use href="#shape-star-main"/>
+      <use href="#shape-dot-top-right"/>
+      <use href="#shape-comet-tip"/>
+      <use href="#shape-l-shoulder"/>
+      <use href="#shape-dot-upper"/>
+      <use href="#shape-u-body"/>
+      <use href="#shape-star-left-small"/>
+      <use href="#shape-swoosh-upper"/>
+      <use href="#shape-dot-left"/>
+      <use href="#shape-star-left"/>
+      <use href="#shape-dot-center-small"/>
+      <use href="#shape-dot-right"/>
+      <use href="#shape-inner-slash"/>
+      <use href="#shape-dot-lower-small"/>
+      <use href="#shape-swoosh-lower"/>
+      <use href="#shape-l-inner"/>
+      <use href="#shape-l-base"/>
+    </mask>
+
+    <clipPath id="trail-reveal-upper" clipPathUnits="userSpaceOnUse">
+      <rect x="520" y="810" width="0" height="575">
+        <animate attributeName="width" dur="12s" repeatCount="indefinite"
+          values="0;0;760;760;760;760;0;0"
+          keyTimes="0;0.14;0.30;0.56;0.68;0.74;0.90;1"
+          calcMode="spline"
+          keySplines="0.16 1 0.3 1;0.16 1 0.3 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.70 0 0.84 0;0 0 1 1"/>
+      </rect>
+    </clipPath>
+
+    <clipPath id="trail-reveal-lower" clipPathUnits="userSpaceOnUse">
+      <rect x="600" y="1000" width="0" height="385">
+        <animate attributeName="width" dur="12s" repeatCount="indefinite"
+          values="0;0;610;610;610;610;0;0"
+          keyTimes="0;0.16;0.32;0.56;0.68;0.74;0.90;1"
+          calcMode="spline"
+          keySplines="0.16 1 0.3 1;0.16 1 0.3 1;0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1;0.70 0 0.84 0;0 0 1 1"/>
+      </rect>
+    </clipPath>
+  </defs>
+
+  <style>
+    :root {
+      --cycle: 12s;
+      --base: #ffffff;
+      --base-soft: #f7fbff;
+      --highlight: #e7efff;
+      --accent: #9db8ff;
+      --accent-soft: #dce8ff;
+      --accent-deep: #6f91ff;
+      --halo: #9ab4ff;
+      --spark: #ffffff;
+      --ease-out: cubic-bezier(.16, 1, .3, 1);
+      --ease-smooth: cubic-bezier(.42, 0, .2, 1);
+    }
+
+    * {
+      transform-box: fill-box;
+      transform-origin: center;
+      vector-effect: non-scaling-stroke;
+    }
+
+    #scene {
+      transform-origin: 1020px 1030px;
+      animation: sceneFloat var(--cycle) ease-in-out infinite;
+    }
+
+    .fill-main { fill: url(#fill-main); fill-rule: evenodd; }
+    .fill-cool { fill: url(#fill-cool); fill-rule: evenodd; opacity: 0; animation: coolFade var(--cycle) ease-in-out infinite; }
+    .rim { fill: none; stroke: url(#rim-gradient); stroke-width: 1.4; opacity: 0; animation: rimFade var(--cycle) ease-in-out infinite; }
+
+    .trace {
+      fill: none;
+      stroke: url(#trace-gradient);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      opacity: 0;
+      animation: traceFlow var(--cycle) linear infinite;
+    }
+
+    .energy {
+      fill: none;
+      stroke: url(#energy-gradient);
+      stroke-width: 7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: .24 .76;
+      stroke-dashoffset: 1;
+      opacity: 0;
+      filter: url(#glow-shine);
+      animation: energyFlow var(--cycle) linear infinite;
+    }
+
+    .echo {
+      fill: none;
+      stroke: var(--accent-soft);
+      stroke-width: 4.4;
+      opacity: 0;
+      filter: url(#glow-soft);
+      transform-origin: 1020px 1030px;
+    }
+    .echo.one { animation: echoOne var(--cycle) ease-out infinite; }
+    .echo.two { animation: echoTwo var(--cycle) ease-out infinite; }
+
+    #coreGlow { opacity: 0; filter: url(#glow-soft); animation: coreGlow var(--cycle) ease-in-out infinite; }
+    #ambientHalo { opacity: 0; animation: ambientPulse var(--cycle) ease-in-out infinite; }
+
+    .letter-left { opacity: 0; animation: assembleLeft var(--cycle) var(--ease-out) infinite; }
+    .letter-right { opacity: 0; animation: assembleRight var(--cycle) var(--ease-out) infinite; }
+    .trail-upper { opacity: 0; clip-path: url(#trail-reveal-upper); animation: trailVisible var(--cycle) ease-in-out infinite; }
+    .trail-lower { opacity: 0; clip-path: url(#trail-reveal-lower); animation: trailVisible var(--cycle) ease-in-out infinite; }
+    .trail-fragments { opacity: 0; animation: fragmentAppear var(--cycle) var(--ease-smooth) infinite; }
+
+    .spark { fill: url(#star-gradient); opacity: 0; filter: url(#glow-star); transform-origin: center; }
+    .spark.star-main { animation: sparkMain var(--cycle) ease-in-out infinite; }
+    .spark.star-top { animation: sparkOne var(--cycle) ease-in-out infinite; }
+    .spark.star-left-small { animation: sparkTwo var(--cycle) ease-in-out infinite; }
+    .spark.star-left { animation: sparkThree var(--cycle) ease-in-out infinite; }
+    .spark.dot-top-right { animation: dotOne var(--cycle) ease-in-out infinite; }
+    .spark.dot-upper { animation: dotTwo var(--cycle) ease-in-out infinite; }
+    .spark.dot-left { animation: dotThree var(--cycle) ease-in-out infinite; }
+    .spark.dot-center-small { animation: dotFour var(--cycle) ease-in-out infinite; }
+    .spark.dot-right { animation: dotFive var(--cycle) ease-in-out infinite; }
+    .spark.dot-lower-small { animation: dotSix var(--cycle) ease-in-out infinite; }
+
+    #shineWrap { opacity: 0; clip-path: url(#logo-clip); animation: shineWrap var(--cycle) ease-in-out infinite; }
+
+    @keyframes sceneFloat {
+      0%, 10%, 90%, 100% { transform: translateY(0) scale(1); }
+      28% { transform: translateY(-5px) scale(1.002); }
+      50% { transform: translateY(-2px) scale(1); }
+      72% { transform: translateY(-4px) scale(1.001); }
+    }
+
+    @keyframes coreGlow {
+      0%, 8% { opacity: 0; transform: scale(.76); }
+      18% { opacity: .28; transform: scale(.92); }
+      28% { opacity: .62; transform: scale(1.03); }
+      48% { opacity: .48; transform: scale(1); }
+      68% { opacity: .38; transform: scale(.99); }
+      82% { opacity: .54; transform: scale(1.01); }
+      92% { opacity: .10; transform: scale(.88); }
+      100% { opacity: 0; transform: scale(.76); }
+    }
+
+    @keyframes ambientPulse {
+      0%, 12% { opacity: 0; }
+      28% { opacity: .18; }
+      46% { opacity: .09; }
+      64% { opacity: .14; }
+      80% { opacity: .08; }
+      92%, 100% { opacity: 0; }
+    }
+
+    @keyframes coolFade {
+      0%, 16% { opacity: 0; }
+      34% { opacity: .84; }
+      56% { opacity: .56; }
+      72% { opacity: .48; }
+      84% { opacity: .56; }
+      92%, 100% { opacity: 0; }
+    }
+
+    @keyframes rimFade {
+      0%, 12% { opacity: 0; }
+      30% { opacity: .66; }
+      54% { opacity: .28; }
+      74% { opacity: .48; }
+      90%, 100% { opacity: 0; }
+    }
+
+    @keyframes traceFlow {
+      0%, 8%   { opacity: 0; stroke-dashoffset: 1; }
+      12%      { opacity: .72; stroke-dashoffset: 1; }
+      24%      { opacity: 1; stroke-dashoffset: 0; }
+      32%      { opacity: .20; stroke-dashoffset: 0; }
+      68%      { opacity: .20; stroke-dashoffset: 0; }
+      76%      { opacity: 1; stroke-dashoffset: 0; }
+      88%      { opacity: .72; stroke-dashoffset: 1; }
+      100%     { opacity: 0; stroke-dashoffset: 1; }
+    }
+
+    @keyframes energyFlow {
+      0%, 17% { opacity: 0; stroke-dashoffset: 1; }
+      24%     { opacity: .84; stroke-dashoffset: .66; }
+      40%     { opacity: .96; stroke-dashoffset: 0; }
+      60%     { opacity: .36; stroke-dashoffset: -.54; }
+      76%     { opacity: .92; stroke-dashoffset: -1.0; }
+      88%     { opacity: .72; stroke-dashoffset: -1.60; }
+      100%    { opacity: 0; stroke-dashoffset: -1.60; }
+    }
+
+    @keyframes echoOne {
+      0%, 12% { opacity: 0; transform: scale(.88); }
+      24%     { opacity: .16; transform: scale(1.00); }
+      34%     { opacity: 0; transform: scale(1.07); }
+      100%    { opacity: 0; transform: scale(1.07); }
+    }
+
+    @keyframes echoTwo {
+      0%, 74% { opacity: 0; transform: scale(.94); }
+      82%     { opacity: .10; transform: scale(1.00); }
+      92%     { opacity: 0; transform: scale(1.06); }
+      100%    { opacity: 0; transform: scale(1.06); }
+    }
+
+    @keyframes assembleLeft {
+      0%, 10% { opacity: 0; transform: translate(-44px, 22px) scale(.955); }
+      18%     { opacity: .96; transform: translate(5px, -2px) scale(1.010); }
+      26%     { opacity: 1; transform: translate(0, 0) scale(1); }
+      72%     { opacity: 1; transform: translate(0, 0) scale(1); }
+      82%     { opacity: .96; transform: translate(-5px, 2px) scale(1.010); }
+      90%,100%{ opacity: 0; transform: translate(-44px, 22px) scale(.955); }
+    }
+
+    @keyframes assembleRight {
+      0%, 12% { opacity: 0; transform: translate(42px, -18px) scale(.955); }
+      20%     { opacity: .96; transform: translate(-5px, 2px) scale(1.010); }
+      28%     { opacity: 1; transform: translate(0, 0) scale(1); }
+      72%     { opacity: 1; transform: translate(0, 0) scale(1); }
+      82%     { opacity: .96; transform: translate(5px, -2px) scale(1.010); }
+      90%,100%{ opacity: 0; transform: translate(42px, -18px) scale(.955); }
+    }
+
+    @keyframes trailVisible {
+      0%, 18% { opacity: 0; }
+      28%     { opacity: 1; }
+      70%     { opacity: 1; }
+      82%     { opacity: .96; }
+      90%,100%{ opacity: 0; }
+    }
+
+    @keyframes fragmentAppear {
+      0%, 22% { opacity: 0; transform: scale(.86); }
+      32%     { opacity: 1; transform: scale(1.02); }
+      38%     { opacity: 1; transform: scale(1); }
+      70%     { opacity: 1; transform: scale(1); }
+      82%     { opacity: .95; transform: scale(.985); }
+      90%,100%{ opacity: 0; transform: scale(.86); }
+    }
+
+    @keyframes sparkMain {
+      0%, 24% { opacity: 0; transform: scale(.24) rotate(-12deg); }
+      34%     { opacity: 1; transform: scale(1.10) rotate(0deg); }
+      42%     { opacity: .92; transform: scale(1) rotate(0deg); }
+      60%     { opacity: .72; transform: scale(1.04) rotate(4deg); }
+      74%     { opacity: 1; transform: scale(1.10) rotate(-3deg); }
+      84%     { opacity: .88; transform: scale(1) rotate(0deg); }
+      92%,100%{ opacity: 0; transform: scale(.24) rotate(12deg); }
+    }
+
+    @keyframes sparkOne {
+      0%, 22% { opacity: 0; transform: scale(.2) rotate(-10deg); }
+      30%     { opacity: .94; transform: scale(1.06) rotate(0deg); }
+      40%     { opacity: .64; transform: scale(.94) rotate(0deg); }
+      68%     { opacity: .80; transform: scale(1.04) rotate(10deg); }
+      86%     { opacity: .66; transform: scale(.90) rotate(0deg); }
+      94%,100%{ opacity: 0; transform: scale(.2) rotate(-12deg); }
+    }
+
+    @keyframes sparkTwo {
+      0%, 26% { opacity: 0; transform: scale(.2); }
+      34%     { opacity: .78; transform: scale(1.10); }
+      42%     { opacity: .52; transform: scale(.92); }
+      72%     { opacity: .72; transform: scale(1.03); }
+      90%     { opacity: .56; transform: scale(.88); }
+      95%,100%{ opacity: 0; transform: scale(.2); }
+    }
+
+    @keyframes sparkThree {
+      0%, 28% { opacity: 0; transform: scale(.2); }
+      36%     { opacity: .88; transform: scale(1.06); }
+      44%     { opacity: .56; transform: scale(.92); }
+      70%     { opacity: .76; transform: scale(1.02); }
+      88%     { opacity: .60; transform: scale(.88); }
+      95%,100%{ opacity: 0; transform: scale(.2); }
+    }
+
+    @keyframes dotOne {
+      0%, 28% { opacity: 0; transform: scale(.16); }
+      34%     { opacity: .96; transform: scale(1.18); }
+      40%     { opacity: .72; transform: scale(1); }
+      72%     { opacity: .74; transform: scale(1.06); }
+      90%     { opacity: .66; transform: scale(.92); }
+      96%,100%{ opacity: 0; transform: scale(.20); }
+    }
+    @keyframes dotTwo {
+      0%, 24% { opacity: 0; transform: scale(.16); }
+      30%     { opacity: .90; transform: scale(1.14); }
+      38%     { opacity: .70; transform: scale(1); }
+      70%     { opacity: .72; transform: scale(1.04); }
+      90%     { opacity: .64; transform: scale(.92); }
+      96%,100%{ opacity: 0; transform: scale(.20); }
+    }
+    @keyframes dotThree {
+      0%, 26% { opacity: 0; transform: scale(.16); }
+      32%     { opacity: .94; transform: scale(1.16); }
+      40%     { opacity: .72; transform: scale(1); }
+      68%     { opacity: .76; transform: scale(1.05); }
+      88%     { opacity: .62; transform: scale(.90); }
+      95%,100%{ opacity: 0; transform: scale(.20); }
+    }
+    @keyframes dotFour {
+      0%, 30% { opacity: 0; transform: scale(.16); }
+      36%     { opacity: .80; transform: scale(1.14); }
+      42%     { opacity: .56; transform: scale(1); }
+      72%     { opacity: .60; transform: scale(1.04); }
+      90%     { opacity: .50; transform: scale(.90); }
+      96%,100%{ opacity: 0; transform: scale(.20); }
+    }
+    @keyframes dotFive {
+      0%, 28% { opacity: 0; transform: scale(.16); }
+      34%     { opacity: .92; transform: scale(1.16); }
+      42%     { opacity: .72; transform: scale(1); }
+      70%     { opacity: .74; transform: scale(1.04); }
+      88%     { opacity: .62; transform: scale(.90); }
+      96%,100%{ opacity: 0; transform: scale(.20); }
+    }
+    @keyframes dotSix {
+      0%, 32% { opacity: 0; transform: scale(.16); }
+      38%     { opacity: .78; transform: scale(1.12); }
+      44%     { opacity: .54; transform: scale(1); }
+      72%     { opacity: .58; transform: scale(1.04); }
+      90%     { opacity: .48; transform: scale(.90); }
+      96%,100%{ opacity: 0; transform: scale(.20); }
+    }
+
+    @keyframes shineWrap {
+      0%, 34% { opacity: 0; }
+      44%     { opacity: 1; }
+      66%     { opacity: .28; }
+      80%     { opacity: .52; }
+      90%,100%{ opacity: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #scene, .fill-cool, .rim, .trace, .energy, .echo, #coreGlow, #ambientHalo,
+      .letter-left, .letter-right, .trail-upper, .trail-lower, .trail-fragments,
+      .spark, #shineWrap { animation: none !important; }
+      .letter-left, .letter-right, .trail-upper, .trail-lower, .trail-fragments, .spark, #coreGlow { opacity: 1; transform: none; }
+      .trace, .energy, .echo, #ambientHalo, #shineWrap { opacity: 0; }
+    }
+  </style>
+
+  <g id="scene">
+    <g id="coreGlow">
+      <ellipse cx="1020" cy="1040" rx="420" ry="320" fill="url(#core-glow-gradient)"/>
+    </g>
+
+    <g id="ambientHalo" filter="url(#glow-soft)">
+      <ellipse cx="1010" cy="1025" rx="360" ry="250" fill="var(--halo)" fill-opacity="0.13"/>
+      <ellipse cx="1035" cy="1010" rx="275" ry="190" fill="var(--base)" fill-opacity="0.05"/>
+    </g>
+
+    <g class="echo one">
+        <use href="#shape-l-upper"/>
+        <use href="#shape-star-top"/>
+        <use href="#shape-star-main"/>
+        <use href="#shape-dot-top-right"/>
+        <use href="#shape-comet-tip"/>
+        <use href="#shape-l-shoulder"/>
+        <use href="#shape-dot-upper"/>
+        <use href="#shape-u-body"/>
+        <use href="#shape-star-left-small"/>
+        <use href="#shape-swoosh-upper"/>
+        <use href="#shape-dot-left"/>
+        <use href="#shape-star-left"/>
+        <use href="#shape-dot-center-small"/>
+        <use href="#shape-dot-right"/>
+        <use href="#shape-inner-slash"/>
+        <use href="#shape-dot-lower-small"/>
+        <use href="#shape-swoosh-lower"/>
+        <use href="#shape-l-inner"/>
+        <use href="#shape-l-base"/>
+    </g>
+
+    <g class="echo two">
+        <use href="#shape-l-upper"/>
+        <use href="#shape-star-top"/>
+        <use href="#shape-star-main"/>
+        <use href="#shape-dot-top-right"/>
+        <use href="#shape-comet-tip"/>
+        <use href="#shape-l-shoulder"/>
+        <use href="#shape-dot-upper"/>
+        <use href="#shape-u-body"/>
+        <use href="#shape-star-left-small"/>
+        <use href="#shape-swoosh-upper"/>
+        <use href="#shape-dot-left"/>
+        <use href="#shape-star-left"/>
+        <use href="#shape-dot-center-small"/>
+        <use href="#shape-dot-right"/>
+        <use href="#shape-inner-slash"/>
+        <use href="#shape-dot-lower-small"/>
+        <use href="#shape-swoosh-lower"/>
+        <use href="#shape-l-inner"/>
+        <use href="#shape-l-base"/>
+    </g>
+
+    <g id="logoMain" filter="url(#glow-logo)">
+      <g class="letter-left fill-main">
+        <use href="#shape-l-upper"/>
+        <use href="#shape-l-shoulder"/>
+        <use href="#shape-l-inner"/>
+        <use href="#shape-l-base"/>
+      </g>
+      <g class="letter-right fill-main">
+        <use href="#shape-u-body"/>
+      </g>
+
+      <g class="trail-upper fill-main">
+        <use href="#shape-swoosh-upper"/>
+      </g>
+      <g class="trail-lower fill-main">
+        <use href="#shape-swoosh-lower"/>
+      </g>
+      <g class="trail-fragments fill-main">
+        <use href="#shape-inner-slash"/>
+        <use href="#shape-comet-tip"/>
+      </g>
+
+      <g class="fill-cool">
+        <use href="#shape-l-upper"/>
+        <use href="#shape-star-top"/>
+        <use href="#shape-star-main"/>
+        <use href="#shape-dot-top-right"/>
+        <use href="#shape-comet-tip"/>
+        <use href="#shape-l-shoulder"/>
+        <use href="#shape-dot-upper"/>
+        <use href="#shape-u-body"/>
+        <use href="#shape-star-left-small"/>
+        <use href="#shape-swoosh-upper"/>
+        <use href="#shape-dot-left"/>
+        <use href="#shape-star-left"/>
+        <use href="#shape-dot-center-small"/>
+        <use href="#shape-dot-right"/>
+        <use href="#shape-inner-slash"/>
+        <use href="#shape-dot-lower-small"/>
+        <use href="#shape-swoosh-lower"/>
+        <use href="#shape-l-inner"/>
+        <use href="#shape-l-base"/>
+      </g>
+
+      <g class="rim">
+        <use href="#shape-l-upper"/>
+        <use href="#shape-star-top"/>
+        <use href="#shape-star-main"/>
+        <use href="#shape-dot-top-right"/>
+        <use href="#shape-comet-tip"/>
+        <use href="#shape-l-shoulder"/>
+        <use href="#shape-dot-upper"/>
+        <use href="#shape-u-body"/>
+        <use href="#shape-star-left-small"/>
+        <use href="#shape-swoosh-upper"/>
+        <use href="#shape-dot-left"/>
+        <use href="#shape-star-left"/>
+        <use href="#shape-dot-center-small"/>
+        <use href="#shape-dot-right"/>
+        <use href="#shape-inner-slash"/>
+        <use href="#shape-dot-lower-small"/>
+        <use href="#shape-swoosh-lower"/>
+        <use href="#shape-l-inner"/>
+        <use href="#shape-l-base"/>
+      </g>
+    </g>
+
+    <g id="tracePasses">
+      <g class="trace">
+        <use href="#shape-l-upper"/>
+        <use href="#shape-star-top"/>
+        <use href="#shape-star-main"/>
+        <use href="#shape-dot-top-right"/>
+        <use href="#shape-comet-tip"/>
+        <use href="#shape-l-shoulder"/>
+        <use href="#shape-dot-upper"/>
+        <use href="#shape-u-body"/>
+        <use href="#shape-star-left-small"/>
+        <use href="#shape-swoosh-upper"/>
+        <use href="#shape-dot-left"/>
+        <use href="#shape-star-left"/>
+        <use href="#shape-dot-center-small"/>
+        <use href="#shape-dot-right"/>
+        <use href="#shape-inner-slash"/>
+        <use href="#shape-dot-lower-small"/>
+        <use href="#shape-swoosh-lower"/>
+        <use href="#shape-l-inner"/>
+        <use href="#shape-l-base"/>
+      </g>
+      <g class="energy">
+        <use href="#shape-swoosh-upper"/>
+        <use href="#shape-swoosh-lower"/>
+      </g>
+    </g>
+
+    <g id="sparks">
+      <use href="#shape-star-top" class="spark star-top"/>
+      <use href="#shape-star-main" class="spark star-main"/>
+      <use href="#shape-star-left-small" class="spark star-left-small"/>
+      <use href="#shape-star-left" class="spark star-left"/>
+      <use href="#shape-dot-top-right" class="spark dot-top-right"/>
+      <use href="#shape-dot-upper" class="spark dot-upper"/>
+      <use href="#shape-dot-left" class="spark dot-left"/>
+      <use href="#shape-dot-center-small" class="spark dot-center-small"/>
+      <use href="#shape-dot-right" class="spark dot-right"/>
+      <use href="#shape-dot-lower-small" class="spark dot-lower-small"/>
+    </g>
+
+    <g id="shineWrap" mask="url(#logo-mask)">
+      <rect x="360" y="560" width="240" height="960" fill="url(#shine-gradient)" filter="url(#glow-shine)">
+        <animateTransform attributeName="transform" type="translate" dur="12s" repeatCount="indefinite"
+          values="0 0;0 0;860 0;1240 0;1240 0"
+          keyTimes="0;0.36;0.52;0.68;1"/>
+      </rect>
+      <rect x="385" y="560" width="135" height="960" fill="url(#shine-gradient)" opacity="0.56" filter="url(#glow-shine)">
+        <animateTransform attributeName="transform" type="translate" dur="12s" repeatCount="indefinite"
+          values="0 0;0 0;790 0;1080 0;1080 0"
+          keyTimes="0;0.60;0.76;0.86;1"/>
+      </rect>
+    </g>
+  </g>
+</svg>

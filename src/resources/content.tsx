@@ -4,7 +4,7 @@ const person: Person = {
   firstName: "Luverse",
   lastName: "Studio",
   name: "Luverse",
-  role: "Full Stack Developer",
+  role: "뭐든 만들어 볼 나이",
   avatar: "/images/avatar.png",
   email: "admin@moring.co",
   location: "Asia/Seoul",
@@ -42,7 +42,7 @@ const home: Home = {
   title: person.name,
   description: "Luverse의 개발 프로젝트와 작업 기록",
   headline: <>필요한 서비스를 직접 기획하고 개발합니다.</>,
-  featured: {
+  action: {
     display: true,
     title: <>프로젝트 보기</>,
     href: "/work",
@@ -57,7 +57,7 @@ const home: Home = {
 const about: About = {
   path: "/about",
   label: "About",
-  title: `About – ${person.name}`,
+  title: `소개`,
   description: `${person.name} 소개`,
   tableOfContent: {
     display: false,
@@ -71,106 +71,37 @@ const about: About = {
     link: "https://cal.com",
   },
   intro: {
-    display: true,
+    display: false,
     title: "소개",
     description: (
       <>
-        만들고 싶은거 다 만드는걸 좋아하는 걸 한참 좋아할 나이
+        뭐든 만들어 볼 나이
         <br />
       </>
     ),
   },
   work: {
     display: false,
-    title: "",
-    experiences: [],
+    title: "요즘 집중하는 것",
+    experiences: [
+      {
+        company: "AI × Product",
+        timeframe: "Now",
+        role: "01",
+        achievements: [
+          <>
+            AI를 제품의 실제 기능과 데이터에 자연스럽게 연결하고, 복잡한 기능도
+            사용자가 빠르고 직관적으로 사용할 수 있는 경험을 만드는 데 집중하고 있습니다.
+          </>,
+          <>
+            에이전트 구조와 작은 프로토타입을 직접 만들며 권한, 상태, 실패 복구,
+            실행 결과까지 검증하고 다음 설계에 반영합니다.
+          </>,
+        ],
+        images: [],
+      },
+    ],
   },
-  // work: {
-  //   display: true,
-  //   title: "프로젝트",
-  //   experiences: [
-  //     {
-  //       company: "Moring",
-  //       timeframe: "진행 중",
-  //       role: "Web Service",
-  //       achievements: [
-  //         <>
-  //           게시물, 커뮤니티, 프로필, 메시지, 알림과 계정 기능을 갖춘 서비스를
-  //           직접 설계하고 개발했습니다.
-  //         </>,
-  //         <>
-  //           현재는 콘텐츠를 매거진처럼 만들고 공유하는 서비스로 제품 방향을
-  //           다듬고 있습니다.
-  //         </>,
-  //       ],
-  //       images: [],
-  //     },
-  //     {
-  //       company: "Mori · Source2Visual",
-  //       timeframe: "진행 중",
-  //       role: "AI Content System",
-  //       achievements: [
-  //         <>
-  //           자료를 업로드하면 내용을 분석하고 학습용 화면과 HTML 결과물로
-  //           만드는 파이프라인을 개발했습니다.
-  //         </>,
-  //         <>
-  //           검색, 파일 처리, 결과 검증, 버전 관리와 멀티 에이전트 실행 구조를
-  //           함께 설계했습니다.
-  //         </>,
-  //       ],
-  //       images: [],
-  //     },
-  //     {
-  //       company: "Hermes Agent",
-  //       timeframe: "진행 중",
-  //       role: "Discord AI Agent",
-  //       achievements: [
-  //         <>
-  //           Discord에서 음악 재생, 서버 관리와 Moring 계정 연동을 처리하는
-  //           기능을 확장했습니다.
-  //         </>,
-  //         <>
-  //           관리 권한을 AI의 판단에 맡기지 않고 계정과 Discord 사용자 정보를
-  //           기준으로 시스템에서 차단하도록 설계했습니다.
-  //         </>,
-  //       ],
-  //       images: [],
-  //     },
-  //     {
-  //       company: "MATIS",
-  //       timeframe: "개발 중",
-  //       role: "Developer Tool",
-  //       achievements: [
-  //         <>
-  //           여러 AI 코딩 도구에 작업을 나누고 진행 상태와 결과를 관리하는
-  //           개발 오케스트레이터입니다.
-  //         </>,
-  //         <>
-  //           작업 계약, 독립 작업 공간, 실행 증거와 완료 판정을 중심으로
-  //           구조를 설계했습니다.
-  //         </>,
-  //       ],
-  //       images: [],
-  //     },
-  //     {
-  //       company: "개인 저장 앱",
-  //       timeframe: "개발 중",
-  //       role: "Android App",
-  //       achievements: [
-  //         <>
-  //           다른 앱에서 공유한 링크와 파일을 저장하고 폴더, 메모, 할 일과
-  //           알림으로 정리하는 앱을 만들고 있습니다.
-  //         </>,
-  //         <>
-  //           공유 오버레이, 파일 처리, 다운로드와 Supabase 동기화 기능을
-  //           함께 개발하고 있습니다.
-  //         </>,
-  //       ],
-  //       images: [],
-  //     },
-  //   ],
-  // },
   studies: {
     display: false,
     title: "학력",
@@ -264,9 +195,54 @@ const gallery: Gallery = {
   description: "프로젝트 화면과 작업 과정",
   images: [
     {
-      src: "/images/og/home.png",
-      alt: "Luverse portfolio preview",
-      orientation: "vertical",
+      src: "/images/gallery/luverse_animation.svg",
+      alt: "Luverse Signature Animation",
+      orientation: "square",
+    },
+    {
+      src: "/images/gallery/Cering_backgroundWhite.png",
+      alt: "Cering Background White",
+      orientation: "square",
+    },
+    {
+      src: "/images/gallery/CodeAB.png",
+      alt: "CodeAB",
+      orientation: "square",
+    },
+    {
+      src: "/images/gallery/Jokga School.jpg",
+      alt: "Jokga School",
+      orientation: "square",
+    },
+    {
+      src: "/images/gallery/Mordy Logo.png",
+      alt: "Mordy Logo",
+      orientation: "square",
+    },
+    {
+      src: "/images/gallery/Morit.png",
+      alt: "Morit",
+      orientation: "square",
+    },
+    {
+      src: "/images/gallery/mori.png",
+      alt: "Mori",
+      orientation: "square",
+    },
+    {
+      src: "/images/gallery/moring.png",
+      alt: "Moring",
+      orientation: "square",
+    },
+    {
+      src: "/images/gallery/moring_mc.png",
+      alt: "Moring MC",
+      orientation: "square",
+    },
+    {
+      src: "/images/gallery/배경화면.png",
+      alt: "배경화면",
+      orientation: "16 / 9",
     },
   ],
 };

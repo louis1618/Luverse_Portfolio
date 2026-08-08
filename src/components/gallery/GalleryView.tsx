@@ -13,9 +13,11 @@ export default function GalleryView() {
           sizes="(max-width: 560px) 100vw, 50vw"
           key={index}
           radius="m"
-          aspectRatio={image.orientation === "horizontal" ? "16 / 9" : "3 / 4"}
+          aspectRatio={image.orientation}
           src={image.src}
           alt={image.alt}
+          unoptimized={image.src.endsWith(".svg")}
+          objectFit={image.src.endsWith(".svg") ? "contain" : "cover"}
         />
       ))}
     </MasonryGrid>
