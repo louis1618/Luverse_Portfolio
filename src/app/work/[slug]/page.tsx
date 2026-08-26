@@ -1,18 +1,15 @@
 import { notFound } from "next/navigation";
-import { getPosts } from "@/utils/utils";
+import { getPosts, getPostBySlug } from "@/utils/posts";
 import {
   Meta,
   Schema,
   AvatarGroup,
-  Button,
   Column,
-  Flex,
   Heading,
   Media,
   Text,
   SmartLink,
   Row,
-  Avatar,
   Line,
 } from "@once-ui-system/core";
 import { baseURL, about, person, work } from "@/resources";
@@ -21,8 +18,10 @@ import { ScrollToHash, CustomMDX } from "@/components";
 import { Metadata } from "next";
 import { Projects } from "@/components/work/Projects";
 
+export const dynamic = 'force-dynamic';
+
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
-  const posts = getPosts(["src", "app", "work", "projects"]);
+  const posts = await getPosts('work');
   return posts.map((post) => ({
     slug: post.slug,
   }));
@@ -38,8 +37,7 @@ export async function generateMetadata({
     ? routeParams.slug.join("/")
     : routeParams.slug || "";
 
-  const posts = getPosts(["src", "app", "work", "projects"]);
-  let post = posts.find((post) => post.slug === slugPath);
+  const post = await getPostBySlug('work', slugPath);
 
   if (!post) return {};
 
@@ -47,7 +45,7 @@ export async function generateMetadata({
     title: post.metadata.title,
     description: post.metadata.summary,
     baseURL: baseURL,
-    image: post.metadata.image || `/api/og/generate?title=${post.metadata.title}`,
+    image: post.metadata.image || `/api/og/generate?title=${encodeURIComponent(post.metadata.title)}`,
     path: `${work.path}/${post.slug}`,
     type: "article",
     publishedTime: post.metadata.publishedAt,
@@ -68,7 +66,7 @@ export default async function Project({
     ? routeParams.slug.join("/")
     : routeParams.slug || "";
 
-  let post = getPosts(["src", "app", "work", "projects"]).find((post) => post.slug === slugPath);
+  const post = await getPostBySlug('work', slugPath);
 
   if (!post) {
     notFound();
@@ -118,13 +116,17 @@ export default async function Project({
                     ,{" "}
                   </Text>
                 )}
-                <SmartLink href={member.linkedIn}>{member.name}</SmartLink>
+                {member.linkedIn ? (
+                  <SmartLink href={member.linkedIn}>{member.name}</SmartLink>
+                ) : (
+                  <span>{member.name}</span>
+                )}
               </span>
             ))}
           </Text>
         </Row>
       </Row>
-      {post.metadata.images.length > 0 && (
+      {post.metadata.images && post.metadata.images.length > 0 && (
         <Media priority aspectRatio="16 / 9" radius="m" alt="image" src={post.metadata.images[0]} />
       )}
       <Column style={{ margin: "auto" }} as="article" maxWidth="xs">

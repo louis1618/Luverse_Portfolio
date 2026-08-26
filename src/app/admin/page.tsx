@@ -14,7 +14,18 @@ import { useAdminDrafts, ManualDraft, AdminPostState } from '@/hooks/useAdminDra
 const DraftListModal = dynamic(() => import('@/components/admin/DraftModals').then(mod => mod.DraftListModal), { ssr: false });
 const DraftDiffModal = dynamic(() => import('@/components/admin/DraftModals').then(mod => mod.DraftDiffModal), { ssr: false });
 
-
+interface SupabasePost {
+  id: string;
+  type: 'blog' | 'work';
+  slug: string;
+  title: string;
+  summary: string;
+  content: string;
+  cover_image: string | null;
+  link: string | null;
+  published_at: string;
+  is_published: boolean;
+}
 
 export default function AdminPage() {
   const router = useRouter();
@@ -33,6 +44,11 @@ export default function AdminPage() {
   
   const [isDraftListOpen, setIsDraftListOpen] = useState(false);
   const [selectedDraft, setSelectedDraft] = useState<ManualDraft | null>(null);
+
+  // Supabase post management state
+  const [isPostManagerOpen, setIsPostManagerOpen] = useState(false);
+  const [supabasePosts, setSupabasePosts] = useState<SupabasePost[]>([]);
+  const [isFetchingPosts, setIsFetchingPosts] = useState(false);
 
   const currentState: AdminPostState = {
     postType, title, summary, slug, link, content, coverImage
@@ -53,7 +69,68 @@ export default function AdminPage() {
 
   const onSaveManualDraft = () => {
     saveManualDraft();
-    alert('현재 내용이 임시 저장되었습니다.');
+    alert('현재 내용이 브라우저 로컬 임시저장에 저장되었습니다.');
+  };
+
+  // Fetch Supabase posts for management
+  const fetchSupabasePosts = async () => {
+    setIsFetchingPosts(true);
+    try {
+      const res = await fetch('/api/admin/posts');
+      const data = await res.json();
+      if (res.ok && data.posts) {
+        setSupabasePosts(data.posts);
+      } else {
+        alert(data.error || '포스트 목록을 불러오지 못했습니다.');
+      }
+    } catch (e: any) {
+      alert(`오류: ${e.message}`);
+    } finally {
+      setIsFetchingPosts(false);
+    }
+  };
+
+  const openPostManager = () => {
+    setIsPostManagerOpen(true);
+    fetchSupabasePosts();
+  };
+
+  const loadPostToEditor = (post: SupabasePost) => {
+    if (title || content) {
+      if (!confirm('현재 작성 중인 내용이 덮어씌워집니다. 계속하시겠습니까?')) {
+        return;
+      }
+    }
+    setPostType(post.type);
+    setTitle(post.title);
+    setSummary(post.summary || '');
+    setSlug(post.slug);
+    setLink(post.link || '');
+    setContent(post.content || '');
+    setCoverImage(post.cover_image || null);
+    setEditorKey(prev => prev + 1);
+    setIsPostManagerOpen(false);
+    alert(`"${post.title}" 포스트를 에디터로 불러왔습니다.`);
+  };
+
+  const deleteSupabasePost = async (post: SupabasePost) => {
+    if (!confirm(`정말로 "${post.title}" 포스트를 삭제하시겠습니까?`)) {
+      return;
+    }
+    try {
+      const res = await fetch(`/api/admin/posts?slug=${post.slug}&type=${post.type}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (res.ok) {
+        alert('포스트가 성공적으로 삭제되었습니다.');
+        fetchSupabasePosts();
+      } else {
+        alert(data.error || '삭제 실패');
+      }
+    } catch (e: any) {
+      alert(`오류: ${e.message}`);
+    }
   };
 
   // Custom dropdown states
@@ -70,8 +147,6 @@ export default function AdminPage() {
     if (title || content) setIsDirty(true);
   }, [title, content]);
 
-
-
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
 
   const handleEditorChange = (markdown: string) => {
@@ -83,8 +158,8 @@ export default function AdminPage() {
       alert('이미지 파일만 첨부 가능합니다.');
       throw new Error('Invalid file type');
     }
-    if (file.size > 4 * 1024 * 1024) {
-      alert('4MB 이하의 이미지만 업로드 가능합니다.');
+    if (file.size > 10 * 1024 * 1024) {
+      alert('10MB 이하의 이미지만 업로드 가능합니다.');
       throw new Error('File too large');
     }
 
@@ -139,8 +214,8 @@ export default function AdminPage() {
     if (!file.type.startsWith('image/')) {
       return alert('지원하지 않는 파일 형식입니다. (JPG, PNG, WEBP 등 이미지 파일만 가능)');
     }
-    if (file.size > 4 * 1024 * 1024) {
-      return alert('4MB 이하의 이미지만 업로드 가능합니다.');
+    if (file.size > 10 * 1024 * 1024) {
+      return alert('10MB 이하의 이미지만 업로드 가능합니다.');
     }
 
     const formData = new FormData();
@@ -163,7 +238,7 @@ export default function AdminPage() {
   const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) await handleCoverFile(file);
-    e.target.value = ''; // Reset input to allow selecting the same file again
+    e.target.value = '';
   };
 
   const handleDragOver = (e: React.DragEvent) => { e.preventDefault(); setIsDragOver(true); };
@@ -181,17 +256,10 @@ export default function AdminPage() {
     const finalSlug = slug || title.toLowerCase().replace(/[^a-z0-9가-힣]+/g, '-').replace(/(^-|-$)/g, '');
 
     setIsLoading(true);
-    setPublishStatus('파일 및 이미지 변환 중...');
+    setPublishStatus('Supabase DB에 저장 중...');
 
     try {
-      setPublishStatus('GitHub에 커밋 중...');
-
-      // Convert GitHub Raw preview URLs back to local public paths
-      const rawUrlPattern = /https:\/\/raw\.githubusercontent\.com\/[^/]+\/[^/]+\/main\/public(\/images\/[^)"]+)/g;
-      const finalContent = content.replace(rawUrlPattern, '$1');
-      const finalCoverImage = coverImage ? coverImage.replace(rawUrlPattern, '$1') : null;
-
-      const imageList = finalCoverImage ? [finalCoverImage] : [];
+      const imageList = coverImage ? [coverImage] : [];
 
       const res = await fetch('/api/admin/create-post', {
         method: 'POST',
@@ -202,22 +270,22 @@ export default function AdminPage() {
           summary,
           slug: finalSlug,
           link,
+          coverImage,
           images: imageList,
-          content: finalContent,
+          content: content,
         }),
       });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || '포스트 생성 중 오류가 발생했습니다.');
 
-      setPublishStatus('발행 완료!');
+      setPublishStatus('발행 완료! (실시간 즉시 반영됨)');
       setIsDirty(false);
       clearAutoSave();
-      setCoverImage(null);
       setTimeout(() => {
         setIsPublishModalOpen(false);
         router.push(postType === 'blog' ? `/blog/${finalSlug}` : `/work/${finalSlug}`);
-      }, 1500);
+      }, 1000);
 
     } catch (error: any) {
       alert(`오류: ${error.message}`);
@@ -320,14 +388,20 @@ export default function AdminPage() {
       <Column fillWidth horizontal="center" paddingY="32" style={{ maxWidth: '840px', width: '100%', margin: '0 auto' }}>
 
         {/* Action Bar */}
-        <Row fillWidth horizontal="end" vertical="center" paddingBottom="16" gap="24">
-
+        <Row fillWidth horizontal="end" vertical="center" paddingBottom="16" gap="16">
           <Row gap="8" vertical="center">
             {lastSaved && (
               <Text variant="body-default-xs" onBackground="neutral-weak">
                 자동 저장됨: {lastSaved.toLocaleTimeString()}
               </Text>
             )}
+            <Button
+              variant="tertiary"
+              size="m"
+              onClick={openPostManager}
+            >
+              DB 글 목록 관리
+            </Button>
             <Button
               variant="secondary"
               size="m"
@@ -340,7 +414,7 @@ export default function AdminPage() {
               size="m"
               onClick={() => setIsDraftListOpen(true)}
             >
-              임시 저장 보기 ({drafts.length})
+              임시 저장함 ({drafts.length})
             </Button>
             <Button
               variant="primary"
@@ -461,7 +535,7 @@ export default function AdminPage() {
                   id="slug"
                   value={slug}
                   onChange={(e) => setSlug(e.target.value)}
-                  placeholder="자동 생성됩니다"
+                  placeholder="자동 생성됩니다 (예: my-post-title)"
                 />
               </Column>
 
@@ -509,7 +583,7 @@ export default function AdminPage() {
                       </div>
                     </div>
                     <Text variant="body-default-xs" onBackground="neutral-weak" style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
-                      {coverImage.split('/').pop()}
+                      {coverImage}
                     </Text>
                   </Column>
                 ) : (
@@ -529,13 +603,10 @@ export default function AdminPage() {
                     <Icon name="upload" size="l" onBackground="neutral-weak" />
                     <Column align="center" gap="4">
                       <Text variant="body-default-m" onBackground="neutral-strong" weight="strong">클릭하거나 이미지를 드롭하세요</Text>
-                      <Text variant="body-default-xs" onBackground="neutral-weak">지원 형식: JPG, PNG, WEBP (최대 4MB)</Text>
+                      <Text variant="body-default-xs" onBackground="neutral-weak">Supabase Storage로 즉시 업로드 (최대 10MB)</Text>
                     </Column>
                   </div>
                 )}
-                <Text variant="body-default-xs" onBackground="neutral-weak">
-                  💡 본문에 삽입한 이미지는 별도 설정 없이 자동으로 함께 업로드됩니다.
-                </Text>
               </Column>
             </Column>
 
@@ -547,7 +618,7 @@ export default function AdminPage() {
                 onClick={publishPost}
                 disabled={isLoading}
               >
-                {isLoading ? <Spinner size="s" /> : '최종 발행하기'}
+                {isLoading ? <Spinner size="s" /> : 'Supabase에 저장 및 발행'}
               </Button>
               {publishStatus && (
                 <Text variant="body-default-s" onBackground="neutral-weak" align="center">
@@ -556,6 +627,100 @@ export default function AdminPage() {
               )}
             </Column>
 
+          </Column>
+        </div>
+      )}
+
+      {/* Supabase Post Manager Modal */}
+      {isPostManagerOpen && (
+        <div
+          style={{
+            position: 'fixed', zIndex: 100, top: 0, left: 0, width: '100%', height: '100%',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: 'var(--backdrop-surface, rgba(0, 0, 0, 0.4))', backdropFilter: 'blur(4px)'
+          }}
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) setIsPostManagerOpen(false);
+          }}
+        >
+          <Column
+            background="page"
+            radius="l"
+            padding="32"
+            gap="24"
+            shadow="xl"
+            border="neutral-alpha-weak"
+            style={{ width: '100%', maxWidth: '640px', maxHeight: '80vh', overflowY: 'auto' }}
+          >
+            <Row horizontal="between" vertical="center">
+              <Text variant="heading-strong-l" onBackground="neutral-strong">Supabase DB 글 관리</Text>
+              <button
+                onClick={() => setIsPostManagerOpen(false)}
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '24px', color: 'var(--neutral-on-background-weak)' }}
+              >&times;</button>
+            </Row>
+
+            {isFetchingPosts ? (
+              <Flex fillWidth horizontal="center" padding="32">
+                <Spinner size="m" />
+              </Flex>
+            ) : supabasePosts.length === 0 ? (
+              <Text variant="body-default-m" onBackground="neutral-weak" align="center" padding="32">
+                등록된 포스트가 없습니다.
+              </Text>
+            ) : (
+              <Column gap="12">
+                {supabasePosts.map((post) => (
+                  <Row
+                    key={post.id}
+                    horizontal="between"
+                    vertical="center"
+                    padding="16"
+                    radius="m"
+                    border="neutral-alpha-weak"
+                    background="surface"
+                    gap="16"
+                  >
+                    <Column flex={1} gap="4">
+                      <Row gap="8" vertical="center">
+                        <span style={{
+                          padding: '2px 8px',
+                          borderRadius: '4px',
+                          fontSize: '11px',
+                          fontWeight: 600,
+                          backgroundColor: post.type === 'blog' ? 'rgba(0, 120, 255, 0.15)' : 'rgba(16, 185, 129, 0.15)',
+                          color: post.type === 'blog' ? '#0078FF' : '#10B981',
+                        }}>
+                          {post.type.toUpperCase()}
+                        </span>
+                        <Text variant="label-strong-m" onBackground="neutral-strong">
+                          {post.title}
+                        </Text>
+                      </Row>
+                      <Text variant="body-default-xs" onBackground="neutral-weak">
+                        /{post.type}/{post.slug} &bull; {post.published_at}
+                      </Text>
+                    </Column>
+                    <Row gap="8">
+                      <Button
+                        variant="secondary"
+                        size="s"
+                        onClick={() => loadPostToEditor(post)}
+                      >
+                        수정
+                      </Button>
+                      <Button
+                        variant="tertiary"
+                        size="s"
+                        onClick={() => deleteSupabasePost(post)}
+                      >
+                        삭제
+                      </Button>
+                    </Row>
+                  </Row>
+                ))}
+              </Column>
+            )}
           </Column>
         </div>
       )}

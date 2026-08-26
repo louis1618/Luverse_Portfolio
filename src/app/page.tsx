@@ -15,6 +15,8 @@ import { Mailchimp } from "@/components";
 import { Projects } from "@/components/work/Projects";
 import { Posts } from "@/components/blog/Posts";
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata() {
   return Meta.generate({
     title: home.title,
@@ -25,7 +27,7 @@ export async function generateMetadata() {
   });
 }
 
-export default function Home() {
+export default async function Home() {
   return (
     <Column maxWidth="m" gap="xl" paddingY="12" horizontal="center">
       <Schema

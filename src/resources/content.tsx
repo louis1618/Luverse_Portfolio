@@ -3,7 +3,7 @@ import { About, Blog, Gallery, Home, Newsletter, Person, Social, Work } from "@/
 const person: Person = {
   firstName: "Luverse",
   lastName: "Studio",
-  name: "Luverse",
+  name: "이예찬",
   role: "뭐든 만들어 볼 나이",
   avatar: "/images/avatar.png",
   email: "admin@moring.co",

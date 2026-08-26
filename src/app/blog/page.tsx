@@ -1,7 +1,9 @@
 import { Column, Heading, Meta, Schema } from "@once-ui-system/core";
 import { Mailchimp } from "@/components";
 import { Posts } from "@/components/blog/Posts";
-import { baseURL, blog, person, newsletter } from "@/resources";
+import { baseURL, blog, person } from "@/resources";
+
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -13,7 +15,7 @@ export async function generateMetadata() {
   });
 }
 
-export default function Blog() {
+export default async function Blog() {
   return (
     <Column maxWidth="m" paddingTop="24">
       <Schema

@@ -1,4 +1,4 @@
-import { getPosts } from "@/utils/utils";
+import { getPosts } from "@/utils/posts";
 import { Column } from "@once-ui-system/core";
 import { ProjectCard } from "@/components";
 
@@ -7,8 +7,8 @@ interface ProjectsProps {
   exclude?: string[];
 }
 
-export function Projects({ range, exclude }: ProjectsProps) {
-  let allProjects = getPosts(["src", "app", "work", "projects"]);
+export async function Projects({ range, exclude }: ProjectsProps) {
+  let allProjects = await getPosts("work");
 
   // Exclude by slug (exact match)
   if (exclude && exclude.length > 0) {

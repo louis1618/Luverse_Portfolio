@@ -1,11 +1,11 @@
-import { getPosts } from "@/utils/utils";
+import { getPosts } from "@/utils/posts";
 import { baseURL, work, person } from "@/resources";
 import { NextResponse } from "next/server";
 
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const posts = getPosts(["src", "app", "work", "projects"]);
+  const posts = await getPosts('work');
 
   // Sort posts by date (newest first)
   const sortedPosts = posts.sort((a, b) => {
@@ -47,7 +47,6 @@ export async function GET() {
   </channel>
 </rss>`;
 
-  // Return the RSS XML with the appropriate content type
   return new NextResponse(rssXml, {
     headers: {
       "Content-Type": "application/xml",
